@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Presentes — 15 Anos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #fdf6f9;
+      color: #2c2c2a;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #f4c0d1;
+    }
+
+    .header-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #993556;
+      background: #FBEAF0;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      font-style: italic;
+      color: #2c2c2a;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .header h1 span { color: #D4537E; font-weight: 600; }
+
+    .header-sub {
+      font-size: 13px;
+      color: #888780;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    /* STATS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid #f4c0d1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: #D4537E;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888780;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* SECTION */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #2c2c2a;
+      margin: 1.5rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #f4c0d1;
+    }
+
+    /* GIFT LIST */
+    .gift-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .gift-item {
+      background: #fff;
+      border: 1px solid #f4c0d1;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s, opacity 0.3s;
+    }
+
+    .gift-item.claimed { opacity: 0.55; }
+    .gift-item.claimed .item-name { text-decoration: line-through; color: #888780; }
+
+    .item-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #FBEAF0;
+      color: #993556;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .item-number.ok { background: #EAF3DE; color: #3B6D11; font-size: 18px; }
+
+    .item-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #2c2c2a;
+      margin-bottom: 3px;
+    }
+
+    .item-meta {
+      font-size: 12px;
+      color: #888780;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .dot-high { background: #D4537E; }
+    .dot-mid  { background: #EF9F27; }
+    .dot-low  { background: #97C459; }
+
+    .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+    .item-price { font-size: 12px; font-weight: 700; color: #888780; white-space: nowrap; }
+
+    .claim-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid #D4537E;
+      color: #993556;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .claim-btn:hover { background: #FBEAF0; }
+
+    .claim-btn.ok {
+      border-color: #639922;
+      color: #3B6D11;
+      background: #EAF3DE;
+      cursor: default;
+    }
+
+    .claim-btn:disabled { cursor: default; }
+
+    /* FOOTER NOTE */
+    .footer-note {
+      margin-top: 2rem;
+      padding: 14px 18px;
+      background: #FBEAF0;
+      border-radius: 12px;
+      border-left: 3px solid #D4537E;
+      font-size: 13px;
+      color: #72243E;
+      line-height: 1.6;
+    }
+
+    .footer-note strong {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* LOADING */
+    #loading {
+      text-align: center;
+      padding: 3rem 0;
+      color: #888780;
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #f4c0d1;
+      border-top-color: #D4537E;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #app { display: none; }
+
+    /* MODAL */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-bg.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #2c2c2a;
+    }
+
+    .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
+
+    .modal input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #f4c0d1;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Lato', sans-serif;
+      margin-bottom: 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .modal input:focus { border-color: #D4537E; }
+
+    .modal-actions { display: flex; gap: 8px; justify-content: center; }
+
+    .btn-confirm {
+      padding: 9px 20px;
+      border-radius: 20px;
+      border: none;
+      background: #D4537E;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .btn-cancel {
+      padding: 9px 20px;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      background: transparent;
+      color: #888780;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div id="loading">
+    <div class="spinner"></div>
+    Carregando lista de presentes…
+  </div>
+
+  <div id="app">
+    <div class="header">
+      <div class="header-tag">🌸 Lista de Presentes</div>
+      <h1>Aniversário de <span>15 anos</span></h1>
+      <p class="header-sub">✦ Clique em "Reservar" para marcar o presente escolhido ✦</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-total">—</div>
+        <div class="stat-label">Total de itens</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-claimed">—</div>
+        <div class="stat-label">Reservados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-avail">—</div>
+        <div class="stat-label">Disponíveis</div>
+      </div>
+    </div>
+
+    <div class="section-title">🌸 Desejos especiais</div>
+    <div class="gift-list" id="list-especiais"></div>
+
+    <div class="section-title">✨ Moda &amp; acessórios</div>
+    <div class="gift-list" id="list-moda"></div>
+
+    <div class="section-title">📱 Tech &amp; entretenimento</div>
+    <div class="gift-list" id="list-tech"></div>
+
+    <div class="footer-note">
+      <strong>💌 Mensagem da aniversariante</strong>
+      O mais importante é a sua presença na minha festa! Se quiser me presentear, qualquer item desta lista vai me deixar muito feliz. Obrigada por fazer parte deste dia tão especial! 🎀
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal de confirmação -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2>Reservar presente 🎁</h2>
+    <p>Digite seu nome para confirmar a reserva. Assim a aniversariante saberá quem está presenteando!</p>
+    <input type="text" id="modal-name" placeholder="Seu nome" maxlength="50" />
+    <div class="modal-actions">
+      <button class="btn-cancel" id="btn-cancel">Cancelar</button>
+      <button class="btn-confirm" id="btn-confirm">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
+    authDomain: "lista-15-anos-5e046.firebaseapp.com",
+    databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
+    projectId: "lista-15-anos-5e046",
+    storageBucket: "lista-15-anos-5e046.firebasestorage.app",
+    messagingSenderId: "219147274740",
+    appId: "1:219147274740:web:615135021aa9050b1891a1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
+  const items = {
+    especiais: [
+      { id:"e1", name:"Viagem/experiência surpresa",      meta:"ex: parque, show, teatro",           priority:"high", price:"A combinar" },
+      { id:"e2", name:"Câmera fotográfica instantânea",   meta:"estilo Polaroid ou Fujifilm Instax",  priority:"high", price:"R$ 400–600" },
+      { id:"e3", name:"Perfume importado",                meta:"sua fragrância favorita",             priority:"mid",  price:"R$ 200–350" },
+      { id:"e4", name:"Kit skincare completo",            meta:"hidratante, sérum, protetor solar",   priority:"mid",  price:"R$ 150–300" },
+    ],
+    moda: [
+      { id:"m1", name:"Bolsa de qualidade",               meta:"para o dia a dia",                    priority:"high", price:"R$ 200–500" },
+      { id:"m2", name:"Tênis novo (tamanho 37)",          meta:"modelos modernos e confortáveis",     priority:"mid",  price:"R$ 200–400" },
+      { id:"m3", name:"Conjunto de joias delicadas",      meta:"brincos + colar + pulseira",          priority:"mid",  price:"R$ 150–250" },
+      { id:"m4", name:"Vale-compras em loja de roupas",   meta:"ela escolhe!",                        priority:"low",  price:"R$ 100–200" },
+    ],
+    tech: [
+      { id:"t1", name:"Fone de ouvido Bluetooth",         meta:"AirPods, JBL ou similar",             priority:"high", price:"R$ 250–800" },
+      { id:"t2", name:"Assinatura anual de streaming",    meta:"Spotify, Netflix ou similar",         priority:"mid",  price:"R$ 100–150" },
+      { id:"t3", name:"Caixa de som portátil",            meta:"resistente à água + boa bateria",     priority:"mid",  price:"R$ 200–400" },
+      { id:"t4", name:"Gift card para apps",              meta:"Steam, Google Play, App Store",       priority:"low",  price:"R$ 50–100" },
+    ]
+  };
+
+  const dotClass = { high:"dot-high", mid:"dot-mid", low:"dot-low" };
+  const priorityLabel = { high:"Alta", mid:"Média", low:"Baixa" };
+
+  let dbState = {};
+  let pendingId = null;
+
+  const modal    = document.getElementById("modal");
+  const nameInput= document.getElementById("modal-name");
+  const btnConfirm = document.getElementById("btn-confirm");
+  const btnCancel  = document.getElementById("btn-cancel");
+
+  function renderAll(state) {
+    dbState = state || {};
+    ["especiais","moda","tech"].forEach(cat => {
+      const el = document.getElementById("list-" + cat);
+      el.innerHTML = "";
+      items[cat].forEach(item => {
+        const c = dbState[item.id];
+        const claimed = !!c;
+        el.innerHTML += `
+          <div class="gift-item ${claimed ? "claimed" : ""}">
+            <div class="item-number ${claimed ? "ok" : ""}">
+              ${claimed ? "✓" : `<span style="font-size:12px;color:#993556">${item.id.replace(/\D/g,"")}</span>`}
+            </div>
+            <div>
+              <div class="item-name">${item.name}</div>
+              <div class="item-meta">
+                <span class="dot ${dotClass[item.priority]}"></span>
+                Prioridade ${priorityLabel[item.priority]} · ${item.meta}
+                ${claimed ? `<span style="color:#3B6D11;font-weight:600">· Reservado por ${c}</span>` : ""}
+              </div>
+            </div>
+            <div class="item-right">
+              <div class="item-price">${item.price}</div>
+              <button
+                class="claim-btn ${claimed ? "ok" : ""}"
+                ${claimed ? "disabled" : `onclick="openModal('${item.id}')"`}
+              >${claimed ? "✓ Reservado" : "Reservar"}</button>
+            </div>
+          </div>`;
+      });
+    });
+    updateStats();
+  }
+
+  function updateStats() {
+    const total   = 12;
+    const claimed = Object.keys(dbState).length;
+    document.getElementById("stat-total").textContent   = total;
+    document.getElementById("stat-claimed").textContent = claimed;
+    document.getElementById("stat-avail").textContent   = total - claimed;
+  }
+
+  window.openModal = function(id) {
+    pendingId = id;
+    nameInput.value = "";
+    modal.classList.add("open");
+    setTimeout(() => nameInput.focus(), 100);
+  };
+
+  btnCancel.addEventListener("click", () => {
+    modal.classList.remove("open");
+    pendingId = null;
+  });
+
+  btnConfirm.addEventListener("click", async () => {
+    const nome = nameInput.value.trim();
+    if (!nome) { nameInput.focus(); return; }
+    if (!pendingId) return;
+    const updates = {};
+    updates["/presentes/" + pendingId] = nome;
+    await update(ref(db), updates);
+    modal.classList.remove("open");
+    pendingId = null;
+  });
+
+  nameInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") btnConfirm.click();
+  });
+
+  // Ouvir mudanças em tempo real
+  onValue(ref(db, "presentes"), snapshot => {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    renderAll(snapshot.val());
+  });
+</script>
+</body>
+</html>
