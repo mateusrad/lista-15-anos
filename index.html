@@ -61,44 +61,13 @@
             letter-spacing: 0.04em;
         }
 
-        /* STATS */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: #fff;
-            border: 1px solid #f4c0d1;
-            border-radius: 10px;
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: 700;
-            color: #D4537E;
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #888780;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
         /* SECTION */
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: #2c2c2a;
-            margin: 1.5rem 0 0.75rem;
+            margin: 2rem 0 0.75rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -109,6 +78,13 @@
             flex: 1;
             height: 1px;
             background: #f4c0d1;
+        }
+
+        .section-desc {
+            font-size: 12px;
+            color: #888780;
+            margin-bottom: 1rem;
+            font-style: italic;
         }
 
         /* GIFT LIST */
@@ -126,8 +102,11 @@
             transition: border-color 0.15s, opacity 0.3s;
         }
 
-        .gift-item.claimed { opacity: 0.55; }
+        .gift-item.claimed { opacity: 0.6; }
         .gift-item.claimed .item-name { text-decoration: line-through; color: #888780; }
+
+        .gift-item.multiple-type.claimed { opacity: 1; }
+        .gift-item.multiple-type.claimed .item-name { text-decoration: none; color: #2c2c2a; }
 
         .item-number {
             width: 36px;
@@ -144,6 +123,7 @@
         }
 
         .item-number.ok { background: #EAF3DE; color: #3B6D11; font-size: 18px; }
+        .item-number.multi-ok { background: #E8F4F8; color: #1D70B8; font-size: 16px; }
 
         .item-name {
             font-size: 14px;
@@ -162,9 +142,8 @@
         }
 
         .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-        .dot-high { background: #D4537E; }
-        .dot-mid  { background: #EF9F27; }
-        .dot-low  { background: #97C459; }
+        .dot-excl { background: #D4537E; }
+        .dot-mult { background: #1D70B8; }
 
         .claim-btn {
             font-size: 12px;
@@ -188,28 +167,13 @@
             cursor: default;
         }
 
+        .claim-btn.multi-ok {
+            border-color: #1D70B8;
+            color: #1D70B8;
+            background: #E8F4F8;
+        }
+
         .claim-btn:disabled { cursor: default; }
-
-        /* FOOTER NOTE */
-        .footer-note {
-            margin-top: 2rem;
-            padding: 14px 18px;
-            background: #FBEAF0;
-            border-radius: 12px;
-            border-left: 3px solid #D4537E;
-            font-size: 13px;
-            color: #72243E;
-            line-height: 1.6;
-        }
-
-        .footer-note strong {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 4px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
 
         /* LOADING */
         #loading {
@@ -317,37 +281,16 @@
         <div class="header">
             <div class="header-tag">🌸 Lista de Presentes</div>
             <h1>Aniversário de <span>15 anos</span></h1>
-            <p class="header-sub">✦ Clique em "Reservar" para marcar o presente escolhido ✦</p>
+            <p class="header-sub">✦ Escolha um item da lista para nos ajudar na organização ✦</p>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-number" id="stat-total">—</div>
-                <div class="stat-label">Total de itens</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="stat-claimed">—</div>
-                <div class="stat-label">Reservados</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="stat-avail">—</div>
-                <div class="stat-label">Disponíveis</div>
-            </div>
-        </div>
+        <div class="section-title">🔒 Itens Exclusivos (Unidade Única)</div>
+        <div class="section-desc">Estes itens aceitam apenas uma reserva para evitar presentes idênticos repetidos.</div>
+        <div class="gift-list" id="list-exclusivos"></div>
 
-        <div class="section-title">🌸 Desejos especiais</div>
-        <div class="gift-list" id="list-especiais"></div>
-
-        <div class="section-title">✨ Moda &amp; acessórios</div>
-        <div class="gift-list" id="list-moda"></div>
-
-        <div class="section-title">📱 Tech &amp; entretenimento</div>
-        <div class="gift-list" id="list-tech"></div>
-
-        <div class="footer-note">
-            <strong>💌 Mensagem da aniversariante</strong>
-            O mais importante é a sua presença na minha festa! Se quiser me presentear, qualquer item desta lista vai me deixar muito feliz. Obrigada por fazer parte deste dia tão especial! 🎀
-        </div>
+        <div class="section-title">✨ Sugestões Livres (Múltiplas Escolhas)</div>
+        <div class="section-desc">Categorias abertas onde mais de um convidado pode escolher (modelos variados).</div>
+        <div class="gift-list" id="list-multiplos"></div>
     </div>
 
 </div>
@@ -366,7 +309,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
@@ -382,31 +325,22 @@
     const db  = getDatabase(app);
 
     const items = {
-        especiais: [
-            { id:"e1", name:"Viagem/experiência surpresa",      meta:"ex: parque, show, teatro",           priority:"high" },
-            { id:"e2", name:"Câmera fotográfica instantânea",   meta:"estilo Polaroid ou Fujifilm Instax",  priority:"high" },
-            { id:"e3", name:"Perfume importado",                meta:"sua fragrância favorita",             priority:"mid"  },
-            { id:"e4", name:"Kit skincare completo",            meta:"hidratante, sérum, protetor solar",   priority:"mid"  },
+        exclusivos: [
+            { id:"e1", name:"Câmera fotográfica instantânea",   meta:"Estilo Polaroid ou Fujifilm Instax" },
+            { id:"e2", name:"Perfume Importado Específico",      meta:"Fragrância floral que ela adora" },
+            { id:"e3", name:"Fone de ouvido Bluetooth",         meta:"Modelo específico intra-auricular" }
         ],
-        moda: [
-            { id:"m1", name:"Bolsa de qualidade",               meta:"para o dia a dia",                    priority:"high" },
-            { id:"m2", name:"Tênis novo (tamanho 37)",          meta:"modelos modernos e confortáveis",     priority:"mid"  },
-            { id:"m3", name:"Conjunto de joias delicadas",      meta:"brincos + colar + pulseira",          priority:"mid"  },
-            { id:"m4", name:"Vale-compras em loja de roupas",   meta:"ela escolhe!",                        priority:"low"  },
-        ],
-        tech: [
-            { id:"t1", name:"Fone de ouvido Bluetooth",         meta:"AirPods, JBL ou similar",             priority:"high" },
-            { id:"t2", name:"Assinatura anual de streaming",    meta:"Spotify, Netflix ou similar",         priority:"mid"  },
-            { id:"t3", name:"Caixa de som portátil",            meta:"resistente à água + boa bateria",     priority:"mid"  },
-            { id:"t4", name:"Gift card para apps",              meta:"Steam, Google Play, App Store",       priority:"low"  },
+        multiplos: [
+            { id:"m1", name:"Blusas ou Croppeds (Tamanho 36)",  meta:"Estilos variados para o dia a dia" },
+            { id:"m2", name:"Calçados (Tamanho 35)",            meta:"Tênis, sandálias ou rasteirinhas" },
+            { id:"m3", name:"Maquiagens e Skincare",            meta:"Batons, gloss, rímel ou hidratantes" },
+            { id:"m4", name:"Vale-compras de lojas de roupas",   meta:"Deixe ela escolher o próprio look!" }
         ]
     };
 
-    const dotClass = { high:"dot-high", mid:"dot-mid", low:"dot-low" };
-    const priorityLabel = { high:"Alta", mid:"Média", low:"Baixa" };
-
     let dbState = {};
     let pendingId = null;
+    let pendingType = null;
 
     const modal    = document.getElementById("modal");
     const nameInput= document.getElementById("modal-name");
@@ -415,47 +349,71 @@
 
     function renderAll(state) {
         dbState = state || {};
-        ["especiais","moda","tech"].forEach(cat => {
-            const el = document.getElementById("list-" + cat);
-            el.innerHTML = "";
-            items[cat].forEach(item => {
-                const c = dbState[item.id];
-                const claimed = !!c;
-                el.innerHTML += `
-          <div class="gift-item ${claimed ? "claimed" : ""}">
-            <div class="item-number ${claimed ? "ok" : ""}">
-              ${claimed ? "✓" : `<span style="font-size:12px;color:#993556">${item.id.replace(/\D/g,"")}</span>`}
+
+        const elExcl = document.getElementById("list-exclusivos");
+        elExcl.innerHTML = "";
+        items.exclusivos.forEach(item => {
+            let claimedBy = "";
+            if (dbState[item.id]) {
+                claimedBy = typeof dbState[item.id] === 'object' ? Object.values(dbState[item.id])[0] : dbState[item.id];
+            }
+            const claimed = !!claimedBy;
+
+            elExcl.innerHTML += `
+        <div class="gift-item ${claimed ? "claimed" : ""}">
+          <div class="item-number ${claimed ? "ok" : ""}">
+            ${claimed ? "✓" : `<span style="font-size:12px;color:#993556">🔒</span>`}
+          </div>
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-meta">
+              <span class="dot dot-excl"></span>
+              Item Único · ${item.meta}
+              ${claimed ? `<span style="color:#3B6D11;font-weight:600">· Reservado ✓</span>` : ""}
             </div>
-            <div>
-              <div class="item-name">${item.name}</div>
-              <div class="item-meta">
-                <span class="dot ${dotClass[item.priority]}"></span>
-                Prioridade ${priorityLabel[item.priority]} · ${item.meta}
-                ${claimed ? `<span style="color:#3B6D11;font-weight:600">· Reservado ✓</span>` : ""}
-              </div>
-            </div>
-            <div>
-              <button
-                class="claim-btn ${claimed ? "ok" : ""}"
-                ${claimed ? "disabled" : `onclick="openModal('${item.id}')"`}
-              >${claimed ? "✓ Reservado" : "Reservar"}</button>
-            </div>
-          </div>`;
-            });
+          </div>
+          <div>
+            <button
+              class="claim-btn ${claimed ? "ok" : ""}"
+              ${claimed ? "disabled" : `onclick="openModal('${item.id}', 'exclusivo')"`}
+            >${claimed ? "✓ Reservado" : "Reservar"}</button>
+          </div>
+        </div>`;
         });
-        updateStats();
+
+        const elMult = document.getElementById("list-multiplos");
+        elMult.innerHTML = "";
+        items.multiplos.forEach(item => {
+            const itemData = dbState[item.id] || {};
+            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
+            const claimed = count > 0;
+
+            elMult.innerHTML += `
+        <div class="gift-item multiple-type ${claimed ? "claimed" : ""}">
+          <div class="item-number ${claimed ? "multi-ok" : ""}">
+            ${claimed ? "✓" : `<span style="font-size:12px;color:#1D70B8">✨</span>`}
+          </div>
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-meta">
+              <span class="dot dot-mult"></span>
+              Sugestão Livre · ${item.meta}
+              ${claimed ? `<span style="color:#1D70B8;font-weight:600">· Já escolhido por ${count} ${count === 1 ? 'pessoal' : 'pessoas'} ✓</span>` : ""}
+            </div>
+          </div>
+          <div>
+            <button
+              class="claim-btn ${claimed ? "multi-ok" : ""}"
+              onclick="openModal('${item.id}', 'multiplo')"
+            >Reservar</button>
+          </div>
+        </div>`;
+        });
     }
 
-    function updateStats() {
-        const total   = 12;
-        const claimed = Object.keys(dbState).length;
-        document.getElementById("stat-total").textContent   = total;
-        document.getElementById("stat-claimed").textContent = claimed;
-        document.getElementById("stat-avail").textContent   = total - claimed;
-    }
-
-    window.openModal = function(id) {
+    window.openModal = function(id, type) {
         pendingId = id;
+        pendingType = type;
         nameInput.value = "";
         modal.classList.add("open");
         setTimeout(() => nameInput.focus(), 100);
@@ -464,24 +422,26 @@
     btnCancel.addEventListener("click", () => {
         modal.classList.remove("open");
         pendingId = null;
+        pendingType = null;
     });
 
     btnConfirm.addEventListener("click", async () => {
         const nome = nameInput.value.trim();
         if (!nome) { nameInput.focus(); return; }
         if (!pendingId) return;
-        const updates = {};
-        updates["/presentes/" + pendingId] = nome;
-        await update(ref(db), updates);
+
+        const itemRef = ref(db, "/presentes/" + pendingId);
+        await push(itemRef, nome);
+
         modal.classList.remove("open");
         pendingId = null;
+        pendingType = null;
     });
 
     nameInput.addEventListener("keydown", e => {
         if (e.key === "Enter") btnConfirm.click();
     });
 
-    // Ouvir mudanças em tempo real
     onValue(ref(db, "presentes"), snapshot => {
         document.getElementById("loading").style.display = "none";
         document.getElementById("app").style.display = "block";
