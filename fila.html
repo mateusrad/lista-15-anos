@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fila do Bar — 15 Anos Bárbara</title>
-    <link href="https://fonts.googleapis.com/css2=family=Cormorant+Garamond:wght@600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,8 +18,35 @@
             align-items: center;
         }
 
+        /* Container do topo para organizar o botão Voltar e o título */
+        .top-navigation {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-voltar {
+            font-size: 11px;
+            font-weight: 700;
+            color: #c0607c;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn-voltar:hover { color: #b05570; }
+
         .logo-header {
             text-align: center;
+            width: 100%;
             margin-bottom: 1.5rem;
         }
 
@@ -46,7 +73,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 160px);
         }
 
         .coluna {
@@ -115,7 +142,6 @@
             border-radius: 6px;
         }
 
-        /* Animação especial piscando de forma suave para chamar atenção na retirada */
         .coluna-pronto .item-fila {
             border-color: #e8b4c4;
             background: #fff;
@@ -138,25 +164,25 @@
 </head>
 <body>
 
+<div class="top-navigation">
+    <a href="menu.html" class="btn-voltar">⬅ Voltar ao Menu</a>
+</div>
+
 <div class="logo-header">
     <h1>Bárbara • 15 Anos</h1>
     <p>Acompanhe o seu pedido</p>
 </div>
 
 <div class="painel-fila">
-    <!-- Coluna Preparando -->
     <div class="coluna">
         <h2 class="coluna-titulo titulo-preparando">⏳ Preparando</h2>
         <div class="lista-nomes" id="listaPreparando">
-            <!-- Nomes entram aqui -->
         </div>
     </div>
 
-    <!-- Coluna Pronto para Retirada -->
     <div class="coluna coluna-pronto">
         <h2 class="coluna-titulo titulo-pronto">✨ Retirar no Balcão</h2>
         <div class="lista-nomes" id="listaPronto">
-            <!-- Nomes entram aqui -->
         </div>
     </div>
 </div>
@@ -165,7 +191,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // ⚠️ Configure com as mesmas chaves do seu banco Firebase
     const firebaseConfig = {
         apiKey: "SUA_API_KEY",
         authDomain: "SEU_AUTH_DOMAIN",
@@ -176,40 +201,60 @@
         appId: "SEU_APP_ID"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    const pedidosRef = ref(database, 'pedidos');
+    let database = null;
+    try {
+        if (firebaseConfig.apiKey !== "SUA_API_KEY") {
+            const app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+        }
+    } catch (e) {
+        console.log("Firebase aguardando chaves.");
+    }
 
-    onValue(pedidosRef, (snapshot) => {
-        const divPreparando = document.getElementById('listaPreparando');
-        const divPronto = document.getElementById('listaPronto');
+    if (database) {
+        const pedidosRef = ref(database, 'pedidos');
 
-        divPreparando.innerHTML = "";
-        divPronto.innerHTML = "";
+        onValue(pedidosRef, (snapshot) => {
+            const divPreparando = document.getElementById('listaPreparando');
+            const divPronto = document.getElementById('listaPronto');
 
-        if (!snapshot.exists()) return;
+            divPreparando.innerHTML = "";
+            divPronto.innerHTML = "";
 
-        const dados = snapshot.val();
-        const lista = Object.keys(dados).map(key => dados[key]);
+            if (!snapshot.exists()) return;
 
-        // Ordena para os mais novos na fila ficarem no topo visual
-        lista.sort((a, b) => (b.dataHora || 0) - (a.dataHora || 0));
+            const dados = snapshot.val();
+            const lista = Object.keys(dados).map(key => dados[key]);
 
-        lista.forEach((pedido) => {
-            const item = document.createElement('div');
-            item.className = 'item-fila';
-            item.innerHTML = `
-                <span class="nome">${pedido.convidado}</span>
-                <span class="drink">${pedido.drink}</span>
-            `;
+            lista.sort((a, b) => (b.dataHora || 0) - (a.dataHora || 0));
 
-            if (pedido.status === "pendente") {
-                divPreparando.appendChild(item);
-            } else if (pedido.status === "pronto") {
-                divPronto.appendChild(item);
-            }
+            lista.forEach((pedido) => {
+                const item = document.createElement('div');
+                item.className = 'item-fila';
+                item.innerHTML = `
+                    <span class="nome">${pedido.convidado}</span>
+                    <span class="drink">${pedido.drink}</span>
+                `;
+
+                if (pedido.status === "pendente") {
+                    divPreparando.appendChild(item);
+                } else if (pedido.status === "pronto") {
+                    divPronto.appendChild(item);
+                }
+            });
         });
-    });
+    } else {
+        // Simulação charmosa local se rodar direto sem chaves
+        const divPreparando = document.getElementById('listaPreparando');
+        divPreparando.innerHTML = `
+            <div class="item-fila"><span class="nome">Mateus</span><span class="drink">Gin Tônica</span></div>
+            <div class="item-fila"><span class="nome">Kelli</span><span class="drink">Soda Italiana</span></div>
+        `;
+        const divPronto = document.getElementById('listaPronto');
+        divPronto.innerHTML = `
+            <div class="item-fila"><span class="nome">Bárbara</span><span class="drink">Mojito Teen</span></div>
+        `;
+    }
 </script>
 
 </body>

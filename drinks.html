@@ -86,7 +86,34 @@
             color: #c98fa0;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Botão Elegante para Acompanhar Fila de Espera dentro dos Drinks */
+        .btn-ver-fila {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            background: #fffbfd;
+            border: 1.5px dashed #e8b4c4;
+            color: #c0607c;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(200, 120, 150, 0.04);
+            transition: all 0.2s ease;
+        }
+
+        .btn-ver-fila:hover {
+            background: #fce8ef;
+            border-style: solid;
+            border-color: #d48099;
+            color: #b05570;
         }
 
         .section-title {
@@ -311,6 +338,9 @@
     <p class="header-name">Cocktails</p>
     <p class="header-sub">Toque para pedir</p>
 
+    <!-- Link direto para a Fila integrado aqui no topo da tela -->
+    <a href="fila.html" class="btn-ver-fila">Acompanhar Fila de Espera ⏳</a>
+
     <h3 class="section-title">Drinks Sem Álcool (Teens)</h3>
     <div class="item-list">
         <button class="menu-item-btn" onclick="abrirPedido('Coquetel de Frutas Tropicais')">
@@ -344,6 +374,7 @@
     </div>
 </div>
 
+<!-- Janela Flutuante -->
 <div class="modal-overlay" id="pedidoModal">
     <div class="modal-content">
         <h4 class="modal-title">Confirmar Pedido</h4>
@@ -462,7 +493,6 @@
             return;
         }
 
-        // Padronização: Primeira letra Maiúscula, o resto minúscula
         nomeInput = nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1).toLowerCase();
 
         if (!database) {
