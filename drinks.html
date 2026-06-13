@@ -7,17 +7,299 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Montserrat', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(160deg, #f7dde6 0%, #f9ece8 50%, #f5d8e2 100%); padding: 2rem 1rem; }
-        .card { width: 100%; max-width: 380px; background: linear-gradient(175deg, #fff5f7 0%, #fdeef2 100%); border-radius: 32px; padding: 2rem 1.8rem 2.2rem; box-shadow: 0 12px 40px rgba(180, 80, 110, 0.13); border: 1px solid rgba(240, 185, 200, 0.5); display: flex; flex-direction: column; align-items: center; }
-        .btn-voltar { align-self: flex-start; font-size: 11px; font-weight: 700; color: #c0607c; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s ease; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, #f7dde6 0%, #f9ece8 50%, #f5d8e2 100%);
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 380px;
+            background: linear-gradient(175deg, #fff5f7 0%, #fdeef2 100%);
+            border-radius: 32px;
+            padding: 2rem 1.8rem 2.2rem;
+            box-shadow: 0 12px 40px rgba(180, 80, 110, 0.13);
+            border: 1px solid rgba(240, 185, 200, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-voltar {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            color: #c0607c;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.2s ease;
+        }
+
         .btn-voltar:hover { color: #b05570; }
-        .badge-15 { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #d4869e; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-        .badge-15 span { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #c0607c; letter-spacing: -0.03em; }
-        .header-name { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; color: #b05570; text-transform: uppercase; text-align: center; line-height: 1.4; margin-bottom: 0.1rem; }
-        .header-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: #c98fa0; text-transform: uppercase; text-align: center; margin-bottom: 1.8rem; }
-        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #b05570; margin: 1.4rem 0 0.6rem; align-self: flex-start; border-bottom: 1px solid #e8b4c4; width: 100%; padding-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .item-list { width: 100%; display: flex; flex-direction: column; gap: 0.75rem; }
-        .menu-item { width: 100%; padding: 1rem 1.4rem; border-radius: 18px; background: #fff; color: #b05570; font-family: 'Montserrat', sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; box-shadow: 0 2px 8px rgba(200, 120, 150, 0.07); border: 1.5px solid #e8b4c4; line-height: 1.4; }
+
+        .badge-15 {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid #d4869e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .badge-15 span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #c0607c;
+            letter-spacing: -0.03em;
+        }
+
+        .header-name {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            color: #b05570;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 0.1rem;
+        }
+
+        .header-sub {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            color: #c98fa0;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #b05570;
+            margin: 1.4rem 0 0.6rem;
+            align-self: flex-start;
+            border-bottom: 1px solid #e8b4c4;
+            width: 100%;
+            padding-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .title-alcool {
+            color: #9c405a;
+            border-color: #d4869e;
+        }
+
+        .item-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .menu-item-btn {
+            width: 100%;
+            padding: 1.1rem 1.3rem;
+            border-radius: 18px;
+            background: #fff;
+            color: #b05570;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(200, 120, 150, 0.06);
+            border: 1.5px solid #e8b4c4;
+            line-height: 1.3;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            transition: all 0.22s ease;
+        }
+
+        .menu-item-btn:hover {
+            background: #fce8ef;
+            border-color: #d48099;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(200, 100, 130, 0.12);
+        }
+
+        .badge-tag {
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            align-self: flex-start;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .tag-sem { background: #e6f6ec; color: #2e7d32; }
+        .tag-com { background: #ffebee; color: #c62828; }
+
+        /* ── Estilização da Janela Flutuante (Modal) ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(140, 60, 85, 0.4);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 340px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 1.6rem 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(240, 185, 200, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 19px;
+            font-weight: 600;
+            color: #b05570;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .selected-drink-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #b05570;
+            background: #fce8ef;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            text-align: center;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            border: 1px solid #e8b4c4;
+        }
+
+        .ingredients-box {
+            background: #fffdfd;
+            border: 1px dashed #e8b4c4;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 11px;
+            color: #666;
+            line-height: 1.5;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .ingredients-box strong {
+            font-style: normal;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #b05570;
+            display: block;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .input-group label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #c98fa0;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding-left: 0.3rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 14px;
+            border: 1.5px solid #f0b9c8;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #555;
+            outline: none;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            border-color: #b05570;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 0.85rem;
+            border-radius: 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-cancelar { background: #f5f5f5; color: #888; }
+        .btn-cancelar:hover { background: #e0e0e0; }
+
+        .btn-confirmar { background: #b05570; color: #fff; box-shadow: 0 4px 12px rgba(176, 85, 112, 0.2); }
+        .btn-confirmar:hover { background: #96435c; }
     </style>
 </head>
 <body>
@@ -27,22 +309,187 @@
 
     <div class="badge-15"><span>15</span></div>
     <p class="header-name">Cocktails</p>
-    <p class="header-sub">Menu do Bartender</p>
+    <p class="header-sub">Toque para pedir</p>
 
     <h3 class="section-title">Drinks Sem Álcool (Teens)</h3>
     <div class="item-list">
-        <div class="menu-item">Coquetel de Frutas Tropicais</div>
-        <div class="menu-item">Soda Italiana Especial</div>
-        <div class="menu-item">Virgin Mojito Refrescante</div>
+        <button class="menu-item-btn" onclick="abrirPedido('Coquetel de Frutas Tropicais')">
+            <span>Coquetel de Frutas Tropicais</span>
+            <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Soda Italiana Especial')">
+            <span>Soda Italiana Especial</span>
+            <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Virgin Mojito Refrescante')">
+            <span>Virgin Mojito Refrescante</span>
+            <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
+        </button>
     </div>
 
-    <h3 class="section-title">Drinks Com Álcool (Adultos)</h3>
+    <h3 class="section-title title-alcool">Drinks Com Álcool (Adultos)</h3>
     <div class="item-list">
-        <div class="menu-item">Caipirinhas Variadas</div>
-        <div class="menu-item">Gin Tônica com Especiarias</div>
-        <div class="menu-item">Sex on the Beach</div>
+        <button class="menu-item-btn" onclick="abrirPedido('Caipirinhas Variadas')">
+            <span>Caipirinhas Variadas</span>
+            <span class="badge-tag tag-com">🔴 Contém Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Gin Tônica com Especiarias')">
+            <span>Gin Tônica com Especiarias</span>
+            <span class="badge-tag tag-com">🔴 Contém Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Sex on the Beach')">
+            <span>Sex on the Beach</span>
+            <span class="badge-tag tag-com">🔴 Contém Álcool</span>
+        </button>
     </div>
 </div>
+
+<div class="modal-overlay" id="pedidoModal">
+    <div class="modal-content">
+        <h4 class="modal-title">Confirmar Pedido</h4>
+
+        <div style="display: flex; flex-direction: column; gap: 0.4rem; width: 100%;">
+            <div class="selected-drink-tag" id="nomeDrinkSelecionado">NOME DO DRINK</div>
+            <div id="modalAlcoolBadge" class="badge-tag" style="align-self: center; font-size: 10px; padding: 0.3rem 0.8rem;">TIPO</div>
+        </div>
+
+        <div class="ingredients-box" id="ingredientesDrink">
+            <strong>Ingredientes:</strong>
+            <span id="textoIngredientes">Carregando composição...</span>
+        </div>
+
+        <div class="input-group">
+            <label for="nomeConvidado">Seu Primeiro Nome</label>
+            <input type="text" id="nomeConvidado" placeholder="Ex: Ricardo" required>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action btn-cancelar" onclick="fecharPedido()">Cancelar</button>
+            <button class="btn-action btn-confirmar" onclick="enviarPedidoFirebase()">Pedir Drink</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "SUA_API_KEY",
+        authDomain: "SEU_AUTH_DOMAIN",
+        databaseURL: "SUA_DATABASE_URL",
+        projectId: "SEU_PROJECT_ID",
+        storageBucket: "SEU_STORAGE_BUCKET",
+        messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+        appId: "SEU_APP_ID"
+    };
+
+    let database = null;
+    try {
+        if (firebaseConfig.apiKey !== "SUA_API_KEY") {
+            const app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+        }
+    } catch (e) {
+        console.log("Firebase aguardando chaves.");
+    }
+
+    const infoDrinks = {
+        "Coquetel de Frutas Tropicais": {
+            ingredientes: "Suco de laranja, suco de abacaxi, xarope de grenadine, fatias de frutas frescas e gelo moído.",
+            alcool: false
+        },
+        "Soda Italiana Especial": {
+            ingredientes: "Água gaseificada, xarope artesanal saborizado (Maçã Verde ou Morango), cubos de gelo e hortelã.",
+            alcool: false
+        },
+        "Virgin Mojito Refrescante": {
+            ingredientes: "Hortelã fresca macerada, suco de limão siciliano, xarope de açúcar, água com gás e bastante gelo.",
+            alcool: false
+        },
+        "Caipirinhas Variadas": {
+            ingredientes: "Frutas da estação à escolha (Limão/Morango/Abacaxi), açúcar, gelo e base alcoólica (Vodka Premium ou Cachaça).",
+            alcool: true
+        },
+        "Gin Tônica com Especiarias": {
+            ingredientes: "Gin Nacional, água tônica, fatias de limão taiti, zimbro ralado e especiarias selecionadas.",
+            alcool: true
+        },
+        "Sex on the Beach": {
+            ingredientes: "Vodka, licor de pêssego, suco de laranja natural, xarope de cranberry para o degradê visual e gelo.",
+            alcool: true
+        }
+    };
+
+    let drinkAtual = "";
+
+    window.abrirPedido = function(nomeDrink) {
+        drinkAtual = nomeDrink;
+        document.getElementById('nomeDrinkSelecionado').innerText = nomeDrink.toUpperCase();
+
+        const drinkInfo = infoDrinks[nomeDrink];
+        if (drinkInfo) {
+            document.getElementById('textoIngredientes').innerText = drinkInfo.ingredientes;
+
+            const badgeAlcool = document.getElementById('modalAlcoolBadge');
+            if (drinkInfo.alcool) {
+                badgeAlcool.innerText = "🔴 DRINK COM ÁLCOOL";
+                badgeAlcool.className = "badge-tag tag-com";
+            } else {
+                badgeAlcool.innerText = "🟢 DRINK SEM ÁLCOOL";
+                badgeAlcool.className = "badge-tag tag-sem";
+            }
+        } else {
+            document.getElementById('textoIngredientes').innerText = "Ingredientes selecionados pelo Bartender.";
+            document.getElementById('modalAlcoolBadge').innerText = "";
+        }
+
+        document.getElementById('pedidoModal').classList.add('active');
+        document.getElementById('nomeConvidado').focus();
+    };
+
+    window.fecharPedido = function() {
+        document.getElementById('pedidoModal').classList.remove('active');
+        document.getElementById('nomeConvidado').value = "";
+        drinkAtual = "";
+    };
+
+    window.enviarPedidoFirebase = function() {
+        let nomeInput = document.getElementById('nomeConvidado').value.trim();
+
+        if (!nomeInput) {
+            alert("Por favor, digite seu primeiro nome para sabermos quem vai retirar!");
+            return;
+        }
+
+        // Padronização: Primeira letra Maiúscula, o resto minúscula
+        nomeInput = nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1).toLowerCase();
+
+        if (!database) {
+            alert(`[TESTE LOCAL] Sucesso! Pedido de ${drinkAtual} para ${nomeInput} registrado. Pode retirar no balcão assim que estiver pronto.`);
+            window.fecharPedido();
+            return;
+        }
+
+        const dadosPedido = {
+            drink: drinkAtual,
+            convidado: nomeInput,
+            status: "pendente",
+            dataHora: serverTimestamp()
+        };
+
+        const pedidosRef = ref(database, 'pedidos');
+        push(pedidosRef, dadosPedido)
+            .then(() => {
+                alert(`Sucesso! Seu pedido de ${drinkAtual} foi enviado, ${nomeInput}. Fique de olho no painel do balcão para retirar!`);
+                window.fecharPedido();
+            })
+            .catch((error) => {
+                console.error("Erro no Firebase:", error);
+                alert("Erro ao processar o pedido.");
+            });
+    };
+</script>
 
 </body>
 </html>
