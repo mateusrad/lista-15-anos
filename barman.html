@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Barman — 15 Anos Bárbara</title>
-    <!-- Importação da fonte Montserrat para manter a identidade visual da festa -->
+    <!-- Importação da fonte Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ── BLOCO 1: RESET E CONFIGURAÇÃO GERAL ── */
-        /* Tira as margens padrão do navegador e aplica o fundo escuro do painel */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
-            background: #120509; /* Cor de fundo escura */
+            background: #120509;
             color: #fff;
             padding: 1.5rem;
         }
@@ -26,7 +25,6 @@
         header p { font-size: 11px; color: #c98fa0; margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.1em; }
 
         /* ── BLOCO 3: ESTRUTURA DAS DUAS COLUNAS ── */
-        /* O painel é dividido em duas colunas (Esquerda: Fazer / Direita: Entregar) */
         .painel-trabalho { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .col-barman {
             background: #1e0b11;
@@ -38,10 +36,9 @@
             gap: 1rem;
         }
 
-        /* Cores dos títulos das colunas */
         .titulo-col { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(240, 185, 200, 0.2); }
-        .tit-pendente { color: #ffb74d; } /* Laranja para chamar atenção */
-        .tit-pronto { color: #81c784; } /* Verde para indicar que está pronto */
+        .tit-pendente { color: #ffb74d; }
+        .tit-pronto { color: #81c784; }
 
         /* ── BLOCO 4: DESIGN DOS CARTÕES DE PEDIDO ── */
         .card-pedido {
@@ -54,10 +51,25 @@
             gap: 0.8rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .info-pedido { display: flex; flex-direction: column; gap: 0.2rem; }
+        .info-pedido { display: flex; flex-direction: column; gap: 0.25rem; }
         .nome-convidado { font-size: 15px; font-weight: 700; color: #fff; }
         .nome-drink { font-size: 12px; font-weight: 600; color: #f0b9c8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .horario { font-size: 9.5px; color: #8c606d; }
+        .horario { font-size: 9.5px; color: #8c606d; margin-top: 0.2rem; }
+
+        /* ── ETIQUETAS DE ALERTA DE ÁLCOOL ── */
+        .badge-alcool {
+            align-self: flex-start;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 0.1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .badge-com { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .badge-sem { background: #e6f6ec; color: #2e7d32; border: 1px solid #c8e6c9; }
 
         /* ── BLOCO 5: BOTÕES DE AÇÃO (PRONTO / ENTREGUE) ── */
         .btn-acao { width: 100%; padding: 0.7rem; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; border: none; transition: background 0.2s; }
@@ -69,7 +81,6 @@
         @media (max-width: 600px) { .painel-trabalho { grid-template-columns: 1fr; } }
 
         /* ── BLOCO 6: TOAST DE NOTIFICAÇÃO ── */
-        /* Esta é a caixinha que flutua avisando que o status mudou */
         .toast {
             position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
             background: #1e0b11; border: 1.5px solid rgba(240, 185, 200, 0.3); border-radius: 14px;
@@ -88,7 +99,6 @@
 </head>
 <body>
 
-<!-- Elemento invisível do Toast que só aparece quando o JS mandar -->
 <div class="toast" id="toastNotif">
     <span class="toast-icon" id="toastIcone">✅</span>
     <div class="toast-body">
@@ -104,7 +114,6 @@
     </header>
 
     <div class="painel-trabalho">
-        <!-- COLUNA ESQUERDA: Onde caem os pedidos novos ("pendentes") -->
         <div class="col-barman">
             <h2 class="titulo-col tit-pendente">📥 Para Fazer</h2>
             <div id="listaPendentes">
@@ -112,7 +121,6 @@
             </div>
         </div>
 
-        <!-- COLUNA DIREITA: Onde ficam os drinks prontos esperando o convidado buscar ("prontos") -->
         <div class="col-barman">
             <h2 class="titulo-col tit-pronto">🛎️ No Balcão (Prontos)</h2>
             <div id="listaProntos">
@@ -122,13 +130,11 @@
     </div>
 </div>
 
-<!-- BLOCO 7: LÓGICA DE PROGRAMAÇÃO E BANCO DE DADOS -->
 <script type="module">
-    // 1. Importa as ferramentas do Firebase que leem e gravam dados
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // 2. Chaves de Acesso do SEU Banco de Dados (Lista de Presentes)
+    // Suas Chaves Oficiais do Banco de Dados
     const firebaseConfig = {
         apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
         authDomain: "lista-15-anos-5e046.firebaseapp.com",
@@ -139,29 +145,30 @@
         appId: "1:219147274740:web:615135021aa9050b1891a1"
     };
 
-    // 3. Inicia a conexão com a nuvem do Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    const pedidosRef = ref(database, 'pedidos'); // Aponta direto para a "gaveta" de pedidos
+    const pedidosRef = ref(database, 'pedidos');
 
-    // 4. Esta função 'onValue' fica ESCUTANDO o banco de dados em tempo real.
-    // Qualquer mudança que ocorrer (um pedido novo entrar ou um status mudar), ela roda automaticamente.
+    // Lista de reconhecimento do sistema para classificar se tem álcool ou não
+    const drinksComAlcool = [
+        'Caipirinhas Variadas',
+        'Gin Tônica com Especiarias',
+        'Sex on the Beach'
+    ];
+
     onValue(pedidosRef, (snapshot) => {
         const divPendentes = document.getElementById('listaPendentes');
         const divProntos = document.getElementById('listaProntos');
 
-        // Limpa a tela antes de desenhar a lista atualizada
         divPendentes.innerHTML = "";
         divProntos.innerHTML = "";
 
-        // Se a gaveta de pedidos estiver vazia, exibe mensagem de sem pedidos
         if (!snapshot.exists()) {
             divPendentes.innerHTML = '<div class="sem-pedidos">Nenhum drink pendente...</div>';
             divProntos.innerHTML = '<div class="sem-pedidos">Nenhum drink aguardando retirada...</div>';
             return;
         }
 
-        // Pega todos os dados e transforma em uma lista organizada por horário de chegada
         const dados = snapshot.val();
         const listaOrdenada = Object.keys(dados).map(key => ({ id: key, ...dados[key] }));
         listaOrdenada.sort((a, b) => (a.dataHora || 0) - (b.dataHora || 0));
@@ -169,7 +176,6 @@
         let qtdPendentes = 0;
         let qtdProntos = 0;
 
-        // 5. Para cada pedido que existe no banco de dados, ele cria o "cartão" na tela
         listaOrdenada.forEach((pedido) => {
             let horaFormatada = "";
             if (pedido.dataHora) {
@@ -177,29 +183,40 @@
                 horaFormatada = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             }
 
+            // ── VERIFICAÇÃO DE ÁLCOOL ──
+            // Confere se o drink do pedido está na lista de drinks alcoólicos e cria o botão visual
+            let badgeHtml = "";
+            if (drinksComAlcool.includes(pedido.drink)) {
+                badgeHtml = `<span class="badge-alcool badge-com">🔞 COM ÁLCOOL</span>`;
+            } else {
+                badgeHtml = `<span class="badge-alcool badge-sem">🟢 SEM ÁLCOOL</span>`;
+            }
+
             const card = document.createElement('div');
             card.className = 'card-pedido';
 
-            // Se o status for PENDENTE, desenha o cartão na coluna esquerda com o botão "Pronto"
+            // Cartão PENDENTE (Coluna Esquerda)
             if (pedido.status === "pendente") {
                 qtdPendentes++;
                 card.innerHTML = `
                     <div class="info-pedido">
                         <span class="nome-convidado">${pedido.convidado}</span>
                         <span class="nome-drink">${pedido.drink}</span>
+                        ${badgeHtml}
                         <span class="horario">Pedido às ${horaFormatada}</span>
                     </div>
                     <button class="btn-acao btn-concluir" onclick="mudarStatus('${pedido.id}', 'pronto')">Pronto ➔</button>
                 `;
                 divPendentes.appendChild(card);
             }
-            // Se o status for PRONTO, desenha na coluna direita com o botão "Entregue"
+            // Cartão PRONTO (Coluna Direita)
             else if (pedido.status === "pronto") {
                 qtdProntos++;
                 card.innerHTML = `
                     <div class="info-pedido">
                         <span class="nome-convidado">${pedido.convidado}</span>
                         <span class="nome-drink">${pedido.drink}</span>
+                        ${badgeHtml}
                         <span class="horario">Pronto às ${horaFormatada}</span>
                     </div>
                     <button class="btn-acao btn-entregar" onclick="mudarStatus('${pedido.id}', 'entregue')">✓ Entregue</button>
@@ -208,12 +225,10 @@
             }
         });
 
-        // Se percorrer tudo e não tiver nenhum status correspondente, volta as mensagens padrão
         if (qtdPendentes === 0) divPendentes.innerHTML = '<div class="sem-pedidos">Nenhum drink pendente...</div>';
         if (qtdProntos === 0) divProntos.innerHTML = '<div class="sem-pedidos">Nenhum drink aguardando retirada...</div>';
     });
 
-    // ── LÓGICA DO TOAST (Aviso de sucesso) ──
     let toastTimer = null;
     function mostrarToast(titulo, mensagem, erro = false) {
         const toast = document.getElementById('toastNotif');
@@ -227,13 +242,10 @@
         toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
     }
 
-    // 6. FUNÇÃO PRINCIPAL DO BARMAN (Trocar status)
-    // Quando o barman clica nos botões, esta função vai lá no banco de dados e muda a palavra 'pendente' para 'pronto'
     window.mudarStatus = function(idPedido, novoStatus) {
-        const pedidoEspecificoRef = ref(database, `pedidos/${idPedido}`); // Acha o pedido exato pelo ID invisível dele
+        const pedidoEspecificoRef = ref(database, `pedidos/${idPedido}`);
         const labelAcao = novoStatus === 'pronto' ? 'marcado como pronto' : 'entregue ao convidado';
 
-        // Dispara a atualização na nuvem
         update(pedidoEspecificoRef, { status: novoStatus })
             .then(() => mostrarToast('Status Atualizado', `Pedido ${labelAcao} com sucesso.`))
             .catch((error) => {
