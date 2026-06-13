@@ -388,7 +388,6 @@
     <p class="header-name">Cocktails</p>
     <p class="header-sub">Toque para pedir</p>
 
-    <!-- Link direto para a Fila integrado aqui no topo da tela -->
     <a href="fila.html" class="btn-ver-fila">Acompanhar Fila de Espera ⏳</a>
 
     <h3 class="section-title">Drinks Sem Álcool (Teens)</h3>
@@ -424,7 +423,6 @@
     </div>
 </div>
 
-<!-- Toast de Notificação -->
 <div class="toast" id="toastNotif">
     <span class="toast-icon" id="toastIcone">✅</span>
     <div class="toast-body">
@@ -433,7 +431,6 @@
     </div>
 </div>
 
-<!-- Janela Flutuante -->
 <div class="modal-overlay" id="pedidoModal">
     <div class="modal-content">
         <h4 class="modal-title">Confirmar Pedido</h4>
@@ -464,24 +461,23 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+    // 1. Chaves Oficiais do Banco de Dados (Projeto Lista de Presentes)
     const firebaseConfig = {
-        apiKey: "SUA_API_KEY",
-        authDomain: "SEU_AUTH_DOMAIN",
-        databaseURL: "SUA_DATABASE_URL",
-        projectId: "SEU_PROJECT_ID",
-        storageBucket: "SEU_STORAGE_BUCKET",
-        messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-        appId: "SEU_APP_ID"
+        apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
+        authDomain: "lista-15-anos-5e046.firebaseapp.com",
+        databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
+        projectId: "lista-15-anos-5e046",
+        storageBucket: "lista-15-anos-5e046.firebasestorage.app",
+        messagingSenderId: "219147274740",
+        appId: "1:219147274740:web:615135021aa9050b1891a1"
     };
 
     let database = null;
     try {
-        if (firebaseConfig.apiKey !== "SUA_API_KEY") {
-            const app = initializeApp(firebaseConfig);
-            database = getDatabase(app);
-        }
+        const app = initializeApp(firebaseConfig);
+        database = getDatabase(app);
     } catch (e) {
-        console.log("Firebase aguardando chaves.");
+        console.log("Erro ao iniciar Firebase:", e);
     }
 
     const infoDrinks = {
@@ -565,6 +561,7 @@
         btn.innerText = "Pedir Drink";
     };
 
+    // 2. FUNÇÃO QUE ENVIA PARA O BANCO DE DADOS
     window.enviarPedidoFirebase = function() {
         // ── Debounce: ignora cliques enquanto já está enviando
         if (enviando) return;
@@ -579,29 +576,29 @@
 
         nomeInput = nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1).toLowerCase();
 
-        // ── Ativa estado de loading no botão
+        // ── Ativa estado de loading no botão e trava ele
         enviando = true;
         const btn = document.getElementById('btnConfirmar');
         btn.disabled = true;
         btn.innerText = "Enviando...";
 
         if (!database) {
-            // Simulação local para testes
-            setTimeout(() => {
-                window.fecharPedido();
-                mostrarToast("Pedido Registrado!", `Pedido de ${drinkAtual} para ${nomeInput} anotado. Aguarde no balcão!`);
-            }, 800);
+            mostrarToast("Erro de Conexão", "Banco de dados não conectado.", true);
+            window.fecharPedido();
             return;
         }
 
+        // 3. Monta o pacote de dados do pedido para enviar à "gaveta"
         const dadosPedido = {
             drink: drinkAtual,
             convidado: nomeInput,
             status: "pendente",
-            dataHora: serverTimestamp()
+            dataHora: serverTimestamp() // Pega a hora exata da nuvem do Google
         };
 
         const pedidosRef = ref(database, 'pedidos');
+
+        // 4. Salva no banco de dados
         push(pedidosRef, dadosPedido)
             .then(() => {
                 window.fecharPedido();

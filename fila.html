@@ -197,19 +197,15 @@
 </div>
 
 <div class="painel-fila">
-    <!-- SEÇÃO SUPERIOR: PRONTO PARA RETIRADA -->
     <div class="coluna coluna-pronto">
         <h2 class="coluna-titulo titulo-pronto">✨ Prontos para Retirada (Retirar no Balcão)</h2>
         <div class="lista-nomes" id="listaPronto">
-            <!-- Máximo de 5 nomes via JS -->
         </div>
     </div>
 
-    <!-- SEÇÃO INFERIOR: PREPARANDO -->
     <div class="coluna">
         <h2 class="coluna-titulo titulo-preparando">⏳ Preparando os Próximos Drinks</h2>
         <div class="lista-nomes" id="listaPreparando">
-            <!-- Máximo de 5 nomes via JS -->
         </div>
     </div>
 </div>
@@ -218,24 +214,23 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+    // Chaves Oficiais do Banco de Dados (Projeto Lista de Presentes)
     const firebaseConfig = {
-        apiKey: "SUA_API_KEY",
-        authDomain: "SEU_AUTH_DOMAIN",
-        databaseURL: "SUA_DATABASE_URL",
-        projectId: "SEU_PROJECT_ID",
-        storageBucket: "SEU_STORAGE_BUCKET",
-        messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-        appId: "SEU_APP_ID"
+        apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
+        authDomain: "lista-15-anos-5e046.firebaseapp.com",
+        databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
+        projectId: "lista-15-anos-5e046",
+        storageBucket: "lista-15-anos-5e046.firebasestorage.app",
+        messagingSenderId: "219147274740",
+        appId: "1:219147274740:web:615135021aa9050b1891a1"
     };
 
     let database = null;
     try {
-        if (firebaseConfig.apiKey !== "SUA_API_KEY") {
-            const app = initializeApp(firebaseConfig);
-            database = getDatabase(app);
-        }
+        const app = initializeApp(firebaseConfig);
+        database = getDatabase(app);
     } catch (e) {
-        console.log("Firebase aguardando chaves.");
+        console.log("Erro ao iniciar Firebase:", e);
     }
 
     if (database) {
@@ -246,6 +241,7 @@
             const agora = new Date();
             document.getElementById('horaUpdate').innerText =
                 agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
             const divPreparando = document.getElementById('listaPreparando');
             const divPronto = document.getElementById('listaPronto');
 
