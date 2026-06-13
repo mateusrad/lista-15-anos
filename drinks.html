@@ -325,8 +325,58 @@
         .btn-cancelar { background: #f5f5f5; color: #888; }
         .btn-cancelar:hover { background: #e0e0e0; }
 
-        .btn-confirmar { background: #b05570; color: #fff; box-shadow: 0 4px 12px rgba(176, 85, 112, 0.2); }
-        .btn-confirmar:hover { background: #96435c; }
+        .btn-confirmar { background: #b05570; color: #fff; box-shadow: 0 4px 12px rgba(176, 85, 112, 0.2); transition: background 0.2s, opacity 0.2s; }
+        .btn-confirmar:hover:not(:disabled) { background: #96435c; }
+        .btn-confirmar:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── Toast de Notificação ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #fff;
+            border: 1.5px solid #e8b4c4;
+            border-radius: 16px;
+            padding: 1rem 1.4rem;
+            box-shadow: 0 8px 28px rgba(180, 80, 110, 0.18);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            max-width: 320px;
+            width: calc(100% - 2rem);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+
+        .toast-body { display: flex; flex-direction: column; gap: 0.2rem; }
+
+        .toast-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #b05570;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .toast-msg {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .toast.toast-erro { border-color: #f5c0c0; }
+        .toast.toast-erro .toast-title { color: #c62828; }
     </style>
 </head>
 <body>
@@ -374,6 +424,15 @@
     </div>
 </div>
 
+<!-- Toast de Notificação -->
+<div class="toast" id="toastNotif">
+    <span class="toast-icon" id="toastIcone">✅</span>
+    <div class="toast-body">
+        <span class="toast-title" id="toastTitulo">Pedido Enviado!</span>
+        <span class="toast-msg" id="toastMensagem"></span>
+    </div>
+</div>
+
 <!-- Janela Flutuante -->
 <div class="modal-overlay" id="pedidoModal">
     <div class="modal-content">
@@ -396,7 +455,7 @@
 
         <div class="modal-actions">
             <button class="btn-action btn-cancelar" onclick="fecharPedido()">Cancelar</button>
-            <button class="btn-action btn-confirmar" onclick="enviarPedidoFirebase()">Pedir Drink</button>
+            <button class="btn-action btn-confirmar" id="btnConfirmar" onclick="enviarPedidoFirebase()">Pedir Drink</button>
         </div>
     </div>
 </div>
@@ -453,6 +512,24 @@
     };
 
     let drinkAtual = "";
+    let enviando = false; // ── Guard contra clique duplo
+
+    // ── Toast: exibe mensagem elegante no lugar do alert()
+    let toastTimer = null;
+    window.mostrarToast = function(titulo, mensagem, erro = false) {
+        const toast = document.getElementById('toastNotif');
+        document.getElementById('toastTitulo').innerText = titulo;
+        document.getElementById('toastMensagem').innerText = mensagem;
+        document.getElementById('toastIcone').innerText = erro ? '❌' : '✅';
+        toast.className = 'toast' + (erro ? ' toast-erro' : '');
+
+        // Força reflow para reiniciar animação caso já esteja visível
+        void toast.offsetWidth;
+        toast.classList.add('show');
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+    };
 
     window.abrirPedido = function(nomeDrink) {
         drinkAtual = nomeDrink;
@@ -461,7 +538,6 @@
         const drinkInfo = infoDrinks[nomeDrink];
         if (drinkInfo) {
             document.getElementById('textoIngredientes').innerText = drinkInfo.ingredientes;
-
             const badgeAlcool = document.getElementById('modalAlcoolBadge');
             if (drinkInfo.alcool) {
                 badgeAlcool.innerText = "🔴 DRINK COM ÁLCOOL";
@@ -483,21 +559,38 @@
         document.getElementById('pedidoModal').classList.remove('active');
         document.getElementById('nomeConvidado').value = "";
         drinkAtual = "";
+        enviando = false;
+        const btn = document.getElementById('btnConfirmar');
+        btn.disabled = false;
+        btn.innerText = "Pedir Drink";
     };
 
     window.enviarPedidoFirebase = function() {
+        // ── Debounce: ignora cliques enquanto já está enviando
+        if (enviando) return;
+
         let nomeInput = document.getElementById('nomeConvidado').value.trim();
 
         if (!nomeInput) {
-            alert("Por favor, digite seu primeiro nome para sabermos quem vai retirar!");
+            mostrarToast("Nome obrigatório", "Digite seu primeiro nome para sabermos quem vai retirar o drink.", true);
+            document.getElementById('nomeConvidado').focus();
             return;
         }
 
         nomeInput = nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1).toLowerCase();
 
+        // ── Ativa estado de loading no botão
+        enviando = true;
+        const btn = document.getElementById('btnConfirmar');
+        btn.disabled = true;
+        btn.innerText = "Enviando...";
+
         if (!database) {
-            alert(`[TESTE LOCAL] Sucesso! Pedido de ${drinkAtual} para ${nomeInput} registrado. Pode retirar no balcão assim que estiver pronto.`);
-            window.fecharPedido();
+            // Simulação local para testes
+            setTimeout(() => {
+                window.fecharPedido();
+                mostrarToast("Pedido Registrado!", `Pedido de ${drinkAtual} para ${nomeInput} anotado. Aguarde no balcão!`);
+            }, 800);
             return;
         }
 
@@ -511,12 +604,15 @@
         const pedidosRef = ref(database, 'pedidos');
         push(pedidosRef, dadosPedido)
             .then(() => {
-                alert(`Sucesso! Seu pedido de ${drinkAtual} foi enviado, ${nomeInput}. Fique de olho no painel do balcão para retirar!`);
                 window.fecharPedido();
+                mostrarToast("Pedido Enviado! 🍹", `${nomeInput}, seu ${drinkAtual} está na fila. Fique de olho no painel do balcão!`);
             })
             .catch((error) => {
                 console.error("Erro no Firebase:", error);
-                alert("Erro ao processar o pedido.");
+                enviando = false;
+                btn.disabled = false;
+                btn.innerText = "Pedir Drink";
+                mostrarToast("Erro no Envio", "Não foi possível registrar o pedido. Tente novamente.", true);
             });
     };
 </script>

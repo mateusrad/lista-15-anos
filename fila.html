@@ -16,16 +16,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow: hidden; /* Evita qualquer rolagem na tela da TV */
         }
 
-        /* Container do topo para organizar o botão Voltar e o título */
         .top-navigation {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.2rem;
         }
 
         .btn-voltar {
@@ -38,71 +36,67 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
-            transition: color 0.2s ease;
-            margin-bottom: 1rem;
         }
-
-        .btn-voltar:hover { color: #b05570; }
 
         .logo-header {
             text-align: center;
             width: 100%;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .logo-header h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 26px;
+            font-size: 24px;
             color: #b05570;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
 
         .logo-header p {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             color: #c98fa0;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin-top: 0.2rem;
+            margin-top: 0.1rem;
         }
 
+        /* Painel mudou de colunas lado a lado para seções empilhadas (Top e Bottom) */
         .painel-fila {
             width: 100%;
-            max-width: 800px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            height: calc(100vh - 160px);
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
 
         .coluna {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
             border: 1px solid rgba(240, 185, 200, 0.4);
-            padding: 1.5rem;
+            padding: 1.2rem;
             backdrop-filter: blur(8px);
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            box-shadow: 0 8px 32px rgba(180, 80, 110, 0.05);
+            box-shadow: 0 6px 20px rgba(180, 80, 110, 0.04);
         }
 
+        /* Destaque máximo no topo para quem está PRONTO */
         .coluna-pronto {
-            background: linear-gradient(175deg, #fff5f7 0%, #fdeef2 100%);
+            background: linear-gradient(175deg, #fff2f5 0%, #fdeef2 100%);
             border: 2px solid #e8b4c4;
-            box-shadow: 0 10px 30px rgba(180, 80, 110, 0.1);
+            box-shadow: 0 10px 25px rgba(180, 80, 110, 0.08);
         }
 
         .coluna-titulo {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1.5px solid rgba(180, 80, 110, 0.15);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid rgba(180, 80, 110, 0.12);
         }
 
         .titulo-preparando { color: #8c606d; }
@@ -111,22 +105,21 @@
         .lista-nomes {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
         .item-fila {
             background: #fff;
-            padding: 0.9rem 1.2rem;
-            border-radius: 14px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border: 1px solid rgba(232, 180, 196, 0.2);
-            box-shadow: 0 2px 6px rgba(200, 120, 150, 0.03);
         }
 
         .item-fila .nome {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             color: #555;
         }
@@ -138,51 +131,85 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             background: #faf2f4;
-            padding: 0.25rem 0.6rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 6px;
         }
 
+        /* Animação pulsante na seção superior */
         .coluna-pronto .item-fila {
             border-color: #e8b4c4;
-            background: #fff;
             animation: pulse-brilho 2s infinite alternate;
         }
 
-        .coluna-pronto .item-fila .nome { color: #b05570; }
+        .coluna-pronto .item-fila .nome { color: #b05570; font-size: 15px; }
         .coluna-pronto .item-fila .drink { background: #fce8ef; color: #b05570; }
 
         @keyframes pulse-brilho {
-            0% { box-shadow: 0 2px 6px rgba(180, 80, 110, 0.03); }
-            100% { box-shadow: 0 4px 15px rgba(180, 80, 110, 0.15); border-color: #d4869e; }
+            0% { box-shadow: 0 2px 6px rgba(180, 80, 110, 0.02); }
+            100% { box-shadow: 0 4px 12px rgba(180, 80, 110, 0.12); border-color: #d4869e; }
         }
 
-        @media (max-width: 600px) {
-            .painel-fila { grid-template-columns: 1fr; height: auto; }
-            .coluna { height: 350px; }
+        /* ── Indicador de atualização ao vivo ── */
+        .live-bar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #c98fa0;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #81c784;
+            flex-shrink: 0;
+            animation: piscar 1.8s ease-in-out infinite;
+        }
+
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
         }
     </style>
 </head>
 <body>
 
 <div class="top-navigation">
-    <a href="menu.html" class="btn-voltar">⬅ Voltar ao Menu</a>
+    <a href="drinks.html" class="btn-voltar">⬅ Voltar</a>
 </div>
 
 <div class="logo-header">
-    <h1>Bárbara • 15 Anos</h1>
-    <p>Acompanhe o seu pedido</p>
+    <h1>Painel do Bar</h1>
+    <p>Acompanhe e retire seu copo</p>
+</div>
+
+<div class="live-bar">
+    <span class="live-dot"></span>
+    <span>Ao vivo · Atualizado às <span id="horaUpdate">--:--</span></span>
 </div>
 
 <div class="painel-fila">
-    <div class="coluna">
-        <h2 class="coluna-titulo titulo-preparando">⏳ Preparando</h2>
-        <div class="lista-nomes" id="listaPreparando">
+    <!-- SEÇÃO SUPERIOR: PRONTO PARA RETIRADA -->
+    <div class="coluna coluna-pronto">
+        <h2 class="coluna-titulo titulo-pronto">✨ Prontos para Retirada (Retirar no Balcão)</h2>
+        <div class="lista-nomes" id="listaPronto">
+            <!-- Máximo de 5 nomes via JS -->
         </div>
     </div>
 
-    <div class="coluna coluna-pronto">
-        <h2 class="coluna-titulo titulo-pronto">✨ Retirar no Balcão</h2>
-        <div class="lista-nomes" id="listaPronto">
+    <!-- SEÇÃO INFERIOR: PREPARANDO -->
+    <div class="coluna">
+        <h2 class="coluna-titulo titulo-preparando">⏳ Preparando os Próximos Drinks</h2>
+        <div class="lista-nomes" id="listaPreparando">
+            <!-- Máximo de 5 nomes via JS -->
         </div>
     </div>
 </div>
@@ -215,6 +242,10 @@
         const pedidosRef = ref(database, 'pedidos');
 
         onValue(pedidosRef, (snapshot) => {
+            // Atualiza o horário da última sincronização
+            const agora = new Date();
+            document.getElementById('horaUpdate').innerText =
+                agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             const divPreparando = document.getElementById('listaPreparando');
             const divPronto = document.getElementById('listaPronto');
 
@@ -226,7 +257,11 @@
             const dados = snapshot.val();
             const lista = Object.keys(dados).map(key => dados[key]);
 
+            // Ordenação: Drinks criados por último aparecem primeiro na lista
             lista.sort((a, b) => (b.dataHora || 0) - (a.dataHora || 0));
+
+            let contPronto = 0;
+            let contPendente = 0;
 
             lista.forEach((pedido) => {
                 const item = document.createElement('div');
@@ -236,23 +271,31 @@
                     <span class="drink">${pedido.drink}</span>
                 `;
 
-                if (pedido.status === "pendente") {
+                // Aplica a regra de negócio do limite rígido de 5 por seção
+                if (pedido.status === "pendente" && contPendente < 5) {
                     divPreparando.appendChild(item);
-                } else if (pedido.status === "pronto") {
+                    contPendente++;
+                } else if (pedido.status === "pronto" && contPronto < 5) {
                     divPronto.appendChild(item);
+                    contPronto++;
                 }
             });
         });
     } else {
-        // Simulação charmosa local se rodar direto sem chaves
-        const divPreparando = document.getElementById('listaPreparando');
-        divPreparando.innerHTML = `
-            <div class="item-fila"><span class="nome">Mateus</span><span class="drink">Gin Tônica</span></div>
-            <div class="item-fila"><span class="nome">Kelli</span><span class="drink">Soda Italiana</span></div>
-        `;
+        // Atualiza hora mesmo no mock local
+        const agora = new Date();
+        document.getElementById('horaUpdate').innerText =
+            agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        // Mock demonstrativo local para conferência visual do IntelliJ
         const divPronto = document.getElementById('listaPronto');
         divPronto.innerHTML = `
             <div class="item-fila"><span class="nome">Bárbara</span><span class="drink">Mojito Teen</span></div>
+            <div class="item-fila"><span class="nome">Kelli</span><span class="drink">Sex on the Beach</span></div>
+        `;
+        const divPreparando = document.getElementById('listaPreparando');
+        divPreparando.innerHTML = `
+            <div class="item-fila"><span class="nome">Mateus</span><span class="drink">Gin Tônica</span></div>
         `;
     }
 </script>
