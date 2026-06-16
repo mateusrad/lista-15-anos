@@ -131,7 +131,7 @@
         .item-meta a { color: #1D70B8; text-decoration: underline; font-weight: 600; }
         .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; background: #1D70B8; }
 
-        /* MURAL VISUAL PREMIUM (Para itens sem link) */
+        /* MURAL VISUAL PREMIUM (Cards) */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -157,6 +157,33 @@
 
         .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* SETAS DE NAVEGAÇÃO */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #993556;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            z-index: 5;
+        }
+
+        .nav-arrow:hover { background: rgba(255, 255, 255, 0.85); color: #D4537E; }
+        .nav-arrow.prev { left: 10px; }
+        .nav-arrow.next { right: 10px; }
+
+        /* Miniaturas de navegação (Dots) */
         .gallery-nav {
             position: absolute;
             bottom: 12px;
@@ -168,6 +195,7 @@
             padding: 4px 8px;
             border-radius: 12px;
             backdrop-filter: blur(2px);
+            z-index: 4;
         }
 
         .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4537e; opacity: 0.4; border: none; cursor: pointer; }
@@ -230,7 +258,7 @@
         </div>
 
         <div class="section-title">✨ Sugestões Especiais</div>
-        <div class="section-desc">Fique à vontade para conferir os modelos favoritos da Bárbara e escolher o local de compra de sua preferência!</div>
+        <div class="section-desc">Confira os modelos favoritos da Bárbara e escolha o local de compra de sua preferência! Use as setas para navegar.</div>
         <div class="cards-grid" id="mural-especiais"></div>
 
         <div class="section-title">👜 Bolsas e Acessórios</div>
@@ -274,11 +302,9 @@
     const db  = getDatabase(app);
 
     const items = {
-        // Grupo Premium: Sem link, focado em fotos locais (Gera os Cards)
         especiais: [
-            { id: "sp_tenis_pop", name: "Tênis Abotinado Conforto Pop 👟✨", desc: "Estilo cano alto perfeito! Um dos favoritos da Bárbara por ser confortável e ideal para compor os looks de passeio.", images: ["img/tenis01.png", "img/tenis02.png", "img/tenis03.png", "img/tenis04.png"] }
+            { id: "sp_tenis_pop", name: "Tênis Abotinado Conforto Pop 👟✨", desc: "Estilo cano alto perfeito! Um dos favoritos da Bárbara por ser confortável e ideal para compor os looks de passeio.", images: ["img/tenis01.png", "img/tenis02.png", "img/tenis03.png", "img/tenis04.png"], currentImage: 0 }
         ],
-        // Grupos Padrão: Com link sugerido direto (Gera as Linhas)
         bolsas: [
             { id: "b1", name: "Bolsa Tiracolo Prática para os Parques 🎢", desc: "Compacta e leve, ótima para celular, documentos e o passaporte.", link: "https://www.lojasrenner.com.br/p/bolsa-pequena-em-pu-com-alca-longa-ajustavel/-/A-931239394-br.lr?sku=931239407" },
             { id: "b2", name: "Bolsa Estilo Baguete para Jantares 🍽️", desc: "Modelo clássico e arrumadinho para jantares especiais.", link: "https://www.lojasrenner.com.br/p/bolsa-baguete-pequena-em-pu-com-ajuste-de-alca/-/A-930910300-br.lr" },
@@ -298,7 +324,7 @@
             { id: "m10", name: "Batom e Blush Multifuncional Rosa Mochi Blur 🩷", desc: "Tom rosado clássico ideal para dar aquele ar de saúde natural.", link: "https://www.boticario.com.br/batom-e-blush-multifuncional-rosa-mochi-blur-quem-disse-berenice-35g/" },
             { id: "m11", name: "Glitter Líquido Multiuso Rosatix ✨🔮", desc: "Fácil de aplicar para iluminar o visual e dar um toque de glow.", link: "https://www.boticario.com.br/glitter-liquido-multiuso-rosatix-quem-disse-berenice-4ml/" },
             { id: "m12", name: "Gel de Limpeza Facial Antioxidante Botik Vitamina C 🍊", desc: "Essencial para limpar e iluminar o rosto na rotina de skincare.", link: "https://www.boticario.com.br/gel-de-limpeza-facial-antioxidante-botik-vitamina-c-200g-v2/" },
-            { id: "m13", name: "Sabonete Líquido Perfumado Nativa SPA Ameixa Negra 🧴🔮", desc: "Espuma cremosa com perfumação marcante e premium.", link: "https://www.boticario.com.br/sabonete-liquido-perfumado-nativa-spa-ameixa-negra-250ml-v2/" },
+            { id: "m13", name: "Sabonete Líquido Perfumado Nativa SPA Ameixa Negra 🧴🔮", desc: "Espuma cremosa com perfumação marcante e premium.", link: "https://www.boticario.com.br/santonete-liquido-perfumado-nativa-spa-ameixa-negra-250ml-v2/" },
             { id: "m14", name: "Loção Hidratante Corporal Nativa SPA Ameixa Negra 400ml ⚜️🍇", desc: "Hidratação profunda com quinoa para deixar a pele muito macia.", link: "https://www.boticario.com.br/locao-hidratante-desodorante-corporal-nativa-spa-ameixa-negra-400ml-v2/" }
         ]
     };
@@ -311,16 +337,39 @@
     const btnConfirm = document.getElementById("btn-confirm");
     const btnCancel = document.getElementById("btn-cancel");
 
-    // Troca dinâmica de fotos locais no card premium
-    window.changeCardImage = function(itemId, imgIndex, dotElement) {
-        const imgEl = document.getElementById(`img-${itemId}`);
-        if(imgEl) { imgEl.src = items.especiais.find(i => i.id === itemId).images[imgIndex]; }
-        const container = dotElement.parentElement;
-        container.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
-        dotElement.classList.add('active');
+    // Lógica Corrigida de Navegação (Muda o estado real e atualiza os botões)
+    window.updateGalleryIndex = function(itemId, index) {
+        const item = items.especiais.find(i => i.id === itemId);
+        if (!item) return;
+
+        // Gerencia o loop infinito das fotos
+        if (index >= item.images.length) index = 0;
+        if (index < 0) index = item.images.length - 1;
+
+        // CORREÇÃO CRÍTICA: Atualiza o estado interno da imagem atual no objeto
+        item.currentImage = index;
+
+        // Atualiza a imagem principal e os dots na tela
+        const galleryEl = document.getElementById(`gallery-${itemId}`);
+        if(galleryEl) {
+            const imgEl = galleryEl.querySelector('.card-img');
+            const dotEls = galleryEl.querySelectorAll('.nav-dot');
+            const btnPrev = galleryEl.querySelector('.nav-arrow.prev');
+            const btnNext = galleryEl.querySelector('.nav-arrow.next');
+
+            imgEl.src = item.images[index];
+
+            // Atualiza dinamicamente as chamadas de clique nos botões de seta
+            if(btnPrev) btnPrev.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index - 1})`);
+            if(btnNext) btnNext.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index + 1})`);
+
+            dotEls.forEach((dot, idx) => {
+                idx === index ? dot.classList.add('active') : dot.classList.remove('active');
+            });
+        }
     };
 
-    // Renderiza o painel de Cards Premium (Sem link)
+    // Renderiza o painel de Cards Premium
     function renderPremiumGroup() {
         const targetEl = document.getElementById("mural-especiais");
         targetEl.innerHTML = "";
@@ -329,29 +378,34 @@
             const itemData = dbState[item.id] || {};
             const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
             const claimed = count > 0;
+            const multImg = item.images.length > 1;
 
             let dotsHtml = "";
             item.images.forEach((img, idx) => {
-                dotsHtml += `<button class="nav-dot ${idx === 0 ? 'active' : ''}" onclick="changeCardImage('${item.id}', ${idx}, this)"></button>`;
+                dotsHtml += `<button class="nav-dot ${idx === item.currentImage ? 'active' : ''}" onclick="updateGalleryIndex('${item.id}', ${idx})"></button>`;
             });
 
             targetEl.innerHTML += `
                 <div class="gift-card">
-                    <div class="card-gallery">
-                        <img src="${item.images[0]}" id="img-${item.id}" class="card-img" alt="${item.name}">
-                        <div class="gallery-nav">${dotsHtml}</div>
+                    <div class="card-gallery" id="gallery-${item.id}">
+                        <img src="${item.images[item.currentImage]}" class="card-img" alt="${item.name}">
+                        ${multImg ? `
+                            <button class="nav-arrow prev" onclick="updateGalleryIndex('${item.id}', ${item.currentImage - 1})">‹</button>
+                            <button class="nav-arrow next" onclick="updateGalleryIndex('${item.id}', ${item.currentImage + 1})">›</button>
+                            <div class="gallery-nav">${dotsHtml}</div>
+                        ` : ''}
                     </div>
                     <div class="card-body">
                         <div class="card-title">${item.name}</div>
                         <div class="card-desc">${item.desc}</div>
                         ${claimed ? `<div class="card-status">👥 Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</div>` : ''}
-                        <button class="claim-btn card-btn ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">Escolher</button>
+                        <button class="claim-btn card-btn ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">Escolher Presente</button>
                     </div>
                 </div>`;
         });
     }
 
-    // Renderiza as Linhas Convencionais (Com link)
+    // Renderiza as Linhas Convencionais
     function renderStandardGroup(groupId, listElementId) {
         const targetEl = document.getElementById(listElementId);
         targetEl.innerHTML = "";
