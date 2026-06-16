@@ -17,7 +17,7 @@
         }
 
         .container {
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto;
         }
 
@@ -59,9 +59,10 @@
             color: #888780;
             font-weight: 300;
             letter-spacing: 0.04em;
+            line-height: 1.4;
         }
 
-        /* SECTION TITLE - Estilo Executivo Premium */
+        /* SECTION TITLE */
         .section-title {
             font-family: 'Urbanist', sans-serif;
             font-size: 14px;
@@ -83,16 +84,12 @@
         }
 
         .section-desc {
-            font-family: 'Lato', sans-serif;
             font-size: 12px;
             color: #888780;
             margin-bottom: 1.25rem;
-            font-style: normal;
-            font-weight: 400;
-            letter-spacing: 0.02em;
         }
 
-        /* GIFT LIST */
+        /* LISTA PADRÃO (Bolsas e Beleza) */
         .gift-list { display: flex; flex-direction: column; gap: 8px; }
 
         .gift-item {
@@ -104,14 +101,7 @@
             grid-template-columns: 36px 1fr auto;
             align-items: center;
             gap: 12px;
-            transition: border-color 0.15s, opacity 0.3s;
         }
-
-        .gift-item.claimed { opacity: 0.6; }
-        .gift-item.claimed .item-name { text-decoration: line-through; color: #888780; }
-
-        .gift-item.multiple-type.claimed { opacity: 1; }
-        .gift-item.multiple-type.claimed .item-name { text-decoration: none; color: #2c2c2a; }
 
         .item-number {
             width: 36px;
@@ -126,16 +116,9 @@
             justify-content: center;
             flex-shrink: 0;
         }
-
-        .item-number.ok { background: #EAF3DE; color: #3B6D11; font-size: 18px; }
         .item-number.multi-ok { background: #E8F4F8; color: #1D70B8; font-size: 16px; }
 
-        .item-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: #2c2c2a;
-            margin-bottom: 3px;
-        }
+        .item-name { font-size: 14px; font-weight: 500; color: #2c2c2a; margin-bottom: 3px; }
 
         .item-meta {
             font-size: 12px;
@@ -145,11 +128,57 @@
             gap: 6px;
             flex-wrap: wrap;
         }
+        .item-meta a { color: #1D70B8; text-decoration: underline; font-weight: 600; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; background: #1D70B8; }
 
-        .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-        .dot-excl { background: #D4537E; }
-        .dot-mult { background: #1D70B8; }
+        /* MURAL VISUAL PREMIUM (Para itens sem link) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 20px;
+        }
 
+        .gift-card {
+            background: #fff;
+            border: 1px solid #f4c0d1;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(153, 53, 86, 0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-gallery {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            background: #fafafa;
+        }
+
+        .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .gallery-nav {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 4px 8px;
+            border-radius: 12px;
+            backdrop-filter: blur(2px);
+        }
+
+        .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4537e; opacity: 0.4; border: none; cursor: pointer; }
+        .nav-dot.active { opacity: 1; transform: scale(1.1); }
+
+        .card-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-family: 'Urbanist', sans-serif; font-size: 15px; font-weight: 700; color: #2c2c2a; margin-bottom: 6px; }
+        .card-desc { font-size: 12px; color: #888780; line-height: 1.4; margin-bottom: 12px; flex: 1; }
+        .card-status { font-size: 11px; font-weight: 600; color: #1D70B8; background: #E8F4F8; padding: 4px 10px; border-radius: 6px; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
+
+        /* BOTÕES */
         .claim-btn {
             font-size: 12px;
             font-weight: 600;
@@ -162,115 +191,26 @@
             transition: background 0.15s;
             white-space: nowrap;
         }
-
         .claim-btn:hover { background: #FBEAF0; }
+        .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
+        .card-btn { width: 100%; padding: 8px; border-radius: 25px; font-weight: 700; }
 
-        .claim-btn.ok {
-            border-color: #639922;
-            color: #3B6D11;
-            background: #EAF3DE;
-            cursor: default;
-        }
-
-        .claim-btn.multi-ok {
-            border-color: #1D70B8;
-            color: #1D70B8;
-            background: #E8F4F8;
-        }
-
-        .claim-btn:disabled { cursor: default; }
-
-        /* LOADING */
-        #loading {
-            text-align: center;
-            padding: 3rem 0;
-            color: #888780;
-            font-size: 14px;
-        }
-
-        .spinner {
-            width: 28px;
-            height: 28px;
-            border: 3px solid #f4c0d1;
-            border-top-color: #D4537E;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto 12px;
-        }
-
+        /* LOADING & MODAL */
+        #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
+        .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         #app { display: none; }
 
-        /* MODAL */
-        .modal-bg {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-        }
+        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
         .modal-bg.open { display: flex; }
-
-        .modal {
-            background: #fff;
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 360px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-
-        .modal h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #2c2c2a;
-        }
-
+        .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
         .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
-
-        .modal input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #f4c0d1;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: 'Lato', sans-serif;
-            margin-bottom: 12px;
-            outline: none;
-            transition: border-color 0.15s;
-        }
-
+        .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
         .modal input:focus { border-color: #D4537E; }
-
         .modal-actions { display: flex; gap: 8px; justify-content: center; }
-
-        .btn-confirm {
-            padding: 9px 20px;
-            border-radius: 20px;
-            border: none;
-            background: #D4537E;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .btn-cancel {
-            padding: 9px 20px;
-            border-radius: 20px;
-            border: 1px solid #e0e0e0;
-            background: transparent;
-            color: #888780;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: 'Lato', sans-serif;
-        }
+        .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -286,16 +226,20 @@
         <div class="header">
             <div class="header-tag">🌸 Lista de Presentes</div>
             <h1>Aniversário de <span>15 anos</span></h1>
-            <p class="header-sub">✦ Escolha um item da lista para nos ajudar na organização ✦</p>
+            <p class="header-sub">✦ Escolha um item para presentear a Bárbara. Mais de uma pessoa pode escolher a mesma opção! ✦</p>
         </div>
 
-        <div class="section-title">🔒 Itens Exclusivos (Unidade Única)</div>
-        <div class="section-desc">Estes itens aceitam apenas uma reserva para evitar presentes idênticos repetidos.</div>
-        <div class="gift-list" id="list-exclusivos"></div>
+        <div class="section-title">✨ Sugestões Especiais</div>
+        <div class="section-desc">Fique à vontade para conferir os modelos favoritos da Bárbara e escolher o local de compra de sua preferência!</div>
+        <div class="cards-grid" id="mural-especiais"></div>
 
-        <div class="section-title">✨ Sugestões Livres (Múltiplas Escolhas)</div>
-        <div class="section-desc">Categorias abertas onde mais de um convidado pode escolher (modelos variados).</div>
-        <div class="gift-list" id="list-multiplos"></div>
+        <div class="section-title">👜 Bolsas e Acessórios</div>
+        <div class="section-desc">Modelos práticos recomendados para passeios e uso diário.</div>
+        <div class="gift-list" id="list-bolsas"></div>
+
+        <div class="section-title">💄 Beleza e Autocuidado</div>
+        <div class="section-desc">Maquiagens, colônias e mimos queridinhos de skincare.</div>
+        <div class="gift-list" id="list-beleza"></div>
     </div>
 
 </div>
@@ -303,7 +247,7 @@
 <div class="modal-bg" id="modal">
     <div class="modal">
         <h2>Reservar presente 🎁</h2>
-        <p>Digite seu nome para confirmar a reserva. Assim a aniversariante saberá quem está presenteando!</p>
+        <p>Digite seu nome para confirmar. Assim a aniversariante saberá quem está enviando!</p>
         <input type="text" id="modal-name" placeholder="Seu nome" maxlength="50" />
         <div class="modal-actions">
             <button class="btn-cancel" id="btn-cancel">Cancelar</button>
@@ -330,100 +274,128 @@
     const db  = getDatabase(app);
 
     const items = {
-        exclusivos: [
-            { id:"e1", name:"Perfume Importado Específico", meta:"Fragrância floral que ela adora" }
+        // Grupo Premium: Sem link, focado em fotos locais (Gera os Cards)
+        especiais: [
+            { id: "sp_tenis_pop", name: "Tênis Abotinado Conforto Pop 👟✨", desc: "Estilo cano alto perfeito! Um dos favoritos da Bárbara por ser confortável e ideal para compor os looks de passeio.", images: ["img/tenis01.png", "img/tenis02.png", "img/tenis03.png", "img/tenis04.png"] }
         ],
-        multiplos: [
-            { id:"m1", name:"Kit Onduladas Nutri Waves (4 ITENS)", meta:"Shampoo, Condicionador, Máscara e Creme. Link: <a href='https://www.apicecosmeticos.com.br/products/kit-linha-nutri-waves-01' target='_blank' style='color:#1D70B8;text-decoration:underline;'>Clique aqui para comprar</a>" }
+        // Grupos Padrão: Com link sugerido direto (Gera as Linhas)
+        bolsas: [
+            { id: "b1", name: "Bolsa Tiracolo Prática para os Parques 🎢", desc: "Compacta e leve, ótima para celular, documentos e o passaporte.", link: "https://www.lojasrenner.com.br/p/bolsa-pequena-em-pu-com-alca-longa-ajustavel/-/A-931239394-br.lr?sku=931239407" },
+            { id: "b2", name: "Bolsa Estilo Baguete para Jantares 🍽️", desc: "Modelo clássico e arrumadinho para jantares especiais.", link: "https://www.lojasrenner.com.br/p/bolsa-baguete-pequena-em-pu-com-ajuste-de-alca/-/A-930910300-br.lr" },
+            { id: "b3", name: "Bolsa Transversal Textura Croco ✨", desc: "Estilo moderno com textura croco para saídas à noite.", link: "https://www.lojasrenner.com.br/p/bolsa-transversal-croco-em-pu/-/A-931004966-COR931004966-PRETOAC.br.lr" },
+            { id: "b4", name: "Mini Bolsa Transversal Dia a Dia 🛍️", desc: "A básica indispensável que combina com qualquer roupa.", link: "https://www.lojasrenner.com.br/p/bolsa-transversal-pequena-em-pu-com-alca-longa-ajustavel/-/A-930673316-br.lr" }
+        ],
+        beleza: [
+            { id: "m1", name: "Gloss Lipchilli Franboesa (Fran by Franciny Ehlke) 💄", desc: "Hidratação com muito brilho e o famoso efeito de volume nos lábios.", link: "https://franbyfr.com.br/products/gloss-fran-by-franciny-ehlke-franboesa?srsltid=AfmBOooTA9BwmFF6h7UlcOvDBUKAfDOKrxWxJc3UAWMCu0YfANS5_HeL" },
+            { id: "m2", name: "Bride Kit Edição Limitada (Franciny Ehlke) 💍✨", desc: "Kit exclusivo sofisticado para looks incríveis em fotos.", link: "https://empreendermake.com.br/produtos/bride-kit-fran-by-franciny-ehlke-edicao-limitada-c-01-fran-12108-z5epd/?variant=1383378894&pf=mc" },
+            { id: "m3", name: "Combo Deleite Caramelizado (Body Splash + Loção 400ml) 🍮💛", desc: "Fragrância doce e confortável para pós-banho.", link: "https://www.boticario.com.br/-combo-cuide-se-bem-deleite-caramelizado-body-splash-200ml-locao-corporal-400ml-" },
+            { id: "m4", name: "Combo Boa Noite (Loção Corporal 200ml + 2 Sabonetes) 🌌💤", desc: "Perfeito para a rotina relaxante de cuidados antes de dormir.", link: "https://www.boticario.com.br/combo-cuide-se-bem-boa-noite-locao-corporal-200ml-sabonetes-em-barra-2x80g" },
+            { id: "m5", name: "Sabonetes em Barra Sortidos Cuide-se Bem Feira 🍇🧺", desc: "Mix divertido com cheirinhos inspirados em frutas frescas.", link: "https://www.boticario.com.br/sabonetes-em-barra-sortidos-cuidese-bem-feira-4x80g/" },
+            { id: "m6", name: "Body Splash Desodorante Colônia Beijinho 200ml 💋✨", desc: "Fragrância floral leve para usar a qualquer hora do dia.", link: "https://www.boticario.com.br/body-splash-desodorante-colonia-cuidese-bem-beijinho-200ml/" },
+            { id: "m7", name: "Combo Cuide-se Bem Rosa e Algodão 400ml + Refil Boa Noite 🌸", desc: "Hidratação corporal em dose dupla para garantir o estoque.", link: "https://www.boticario.com.br/combo-cuidese-bem-locao-corporal-rosa-e-algodao-400ml-refil-boa-noite-350ml/" },
+            { id: "m8", name: "Loção Hidratante Corporal Show de Banho 200ml 🧼🚿", desc: "Fragrância inconfundível, leve e refrescante de banho tomado.", link: "https://www.boticario.com.br/locao-desodorante-hidratante-corporal-cuidese-bem-show-de-banho-200ml-v2/" },
+            { id: "m9", name: "Batom e Blush Multifuncional Marrom Mochi Blur 🤎", desc: "Textura aveludada coringa: funciona como batom e blush.", link: "https://www.boticario.com.br/batom-e-blush-multifuncional-marrom-mochi-blur-quem-disse-berenice-35g/" },
+            { id: "m10", name: "Batom e Blush Multifuncional Rosa Mochi Blur 🩷", desc: "Tom rosado clássico ideal para dar aquele ar de saúde natural.", link: "https://www.boticario.com.br/batom-e-blush-multifuncional-rosa-mochi-blur-quem-disse-berenice-35g/" },
+            { id: "m11", name: "Glitter Líquido Multiuso Rosatix ✨🔮", desc: "Fácil de aplicar para iluminar o visual e dar um toque de glow.", link: "https://www.boticario.com.br/glitter-liquido-multiuso-rosatix-quem-disse-berenice-4ml/" },
+            { id: "m12", name: "Gel de Limpeza Facial Antioxidante Botik Vitamina C 🍊", desc: "Essencial para limpar e iluminar o rosto na rotina de skincare.", link: "https://www.boticario.com.br/gel-de-limpeza-facial-antioxidante-botik-vitamina-c-200g-v2/" },
+            { id: "m13", name: "Sabonete Líquido Perfumado Nativa SPA Ameixa Negra 🧴🔮", desc: "Espuma cremosa com perfumação marcante e premium.", link: "https://www.boticario.com.br/sabonete-liquido-perfumado-nativa-spa-ameixa-negra-250ml-v2/" },
+            { id: "m14", name: "Loção Hidratante Corporal Nativa SPA Ameixa Negra 400ml ⚜️🍇", desc: "Hidratação profunda com quinoa para deixar a pele muito macia.", link: "https://www.boticario.com.br/locao-hidratante-desodorante-corporal-nativa-spa-ameixa-negra-400ml-v2/" }
         ]
     };
 
     let dbState = {};
     let pendingId = null;
-    let pendingType = null;
 
-    const modal    = document.getElementById("modal");
-    const nameInput= document.getElementById("modal-name");
+    const modal = document.getElementById("modal");
+    const nameInput = document.getElementById("modal-name");
     const btnConfirm = document.getElementById("btn-confirm");
-    const btnCancel  = document.getElementById("btn-cancel");
+    const btnCancel = document.getElementById("btn-cancel");
 
-    function renderAll(state) {
-        dbState = state || {};
+    // Troca dinâmica de fotos locais no card premium
+    window.changeCardImage = function(itemId, imgIndex, dotElement) {
+        const imgEl = document.getElementById(`img-${itemId}`);
+        if(imgEl) { imgEl.src = items.especiais.find(i => i.id === itemId).images[imgIndex]; }
+        const container = dotElement.parentElement;
+        container.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+        dotElement.classList.add('active');
+    };
 
-        const elExcl = document.getElementById("list-exclusivos");
-        elExcl.innerHTML = "";
-        items.exclusivos.forEach(item => {
-            let claimedBy = "";
-            if (dbState[item.id]) {
-                claimedBy = typeof dbState[item.id] === 'object' ? Object.values(dbState[item.id])[0] : dbState[item.id];
-            }
-            const claimed = !!claimedBy;
+    // Renderiza o painel de Cards Premium (Sem link)
+    function renderPremiumGroup() {
+        const targetEl = document.getElementById("mural-especiais");
+        targetEl.innerHTML = "";
 
-            elExcl.innerHTML += `
-        <div class="gift-item ${claimed ? "claimed" : ""}">
-          <div class="item-number ${claimed ? "ok" : ""}">
-            ${claimed ? "✓" : `<span style="font-size:12px;color:#993556">🔒</span>`}
-          </div>
-          <div>
-            <div class="item-name">${item.name}</div>
-            <div class="item-meta">
-              <span class="dot dot-excl"></span>
-              Item Único · ${item.meta}
-              ${claimed ? `<span style="color:#3B6D11;font-weight:600">· Reservado ✓</span>` : ""}
-            </div>
-          </div>
-          <div>
-            <button
-              class="claim-btn ${claimed ? "ok" : ""}"
-              ${claimed ? "disabled" : `onclick="openModal('${item.id}', 'exclusivo')"`}
-            >${claimed ? "✓ Reservado" : "Reservar"}</button>
-          </div>
-        </div>`;
-        });
-
-        const elMult = document.getElementById("list-multiplos");
-        elMult.innerHTML = "";
-        items.multiplos.forEach(item => {
+        items.especiais.forEach(item => {
             const itemData = dbState[item.id] || {};
             const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
             const claimed = count > 0;
 
-            elMult.innerHTML += `
-        <div class="gift-item multiple-type ${claimed ? "claimed" : ""}">
-          <div class="item-number ${claimed ? "multi-ok" : ""}">
-            ${claimed ? "✓" : `<span style="font-size:12px;color:#1D70B8">✨</span>`}
-          </div>
-          <div>
-            <div class="item-name">${item.name}</div>
-            <div class="item-meta">
-              <span class="dot dot-mult"></span>
-              Sugestão Livre · ${item.meta}
-              ${claimed ? `<span style="color:#1D70B8;font-weight:600">· Já escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
-            </div>
-          </div>
-          <div>
-            <button
-              class="claim-btn ${claimed ? "multi-ok" : ""}"
-              onclick="openModal('${item.id}', 'multiplo')"
-            >Reservar</button>
-          </div>
-        </div>`;
+            let dotsHtml = "";
+            item.images.forEach((img, idx) => {
+                dotsHtml += `<button class="nav-dot ${idx === 0 ? 'active' : ''}" onclick="changeCardImage('${item.id}', ${idx}, this)"></button>`;
+            });
+
+            targetEl.innerHTML += `
+                <div class="gift-card">
+                    <div class="card-gallery">
+                        <img src="${item.images[0]}" id="img-${item.id}" class="card-img" alt="${item.name}">
+                        <div class="gallery-nav">${dotsHtml}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-desc">${item.desc}</div>
+                        ${claimed ? `<div class="card-status">👥 Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</div>` : ''}
+                        <button class="claim-btn card-btn ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">Escolher</button>
+                    </div>
+                </div>`;
         });
     }
 
-    window.openModal = function(id, type) {
+    // Renderiza as Linhas Convencionais (Com link)
+    function renderStandardGroup(groupId, listElementId) {
+        const targetEl = document.getElementById(listElementId);
+        targetEl.innerHTML = "";
+
+        items[groupId].forEach(item => {
+            const itemData = dbState[item.id] || {};
+            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
+            const claimed = count > 0;
+
+            targetEl.innerHTML += `
+                <div class="gift-item">
+                  <div class="item-number ${claimed ? "multi-ok" : ""}">
+                    ${claimed ? "✓" : "✨"}
+                  </div>
+                  <div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-meta">
+                      <span class="dot"></span>
+                      ${item.desc} · <a href="${item.link}" target="_blank">Ver link sugerido</a>
+                      ${claimed ? `<span style="color:#1D70B8;font-weight:600">· Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
+                    </div>
+                  </div>
+                  <div>
+                    <button class="claim-btn ${claimed ? "multi-ok" : ""}" onclick="openModal('${item.id}')">Escolher</button>
+                  </div>
+                </div>`;
+        });
+    }
+
+    function renderAll(state) {
+        dbState = state || {};
+        renderPremiumGroup();
+        renderStandardGroup("bolsas", "list-bolsas");
+        renderStandardGroup("beleza", "list-beleza");
+    }
+
+    window.openModal = function(id) {
         pendingId = id;
-        pendingType = type;
         nameInput.value = "";
         modal.classList.add("open");
         setTimeout(() => nameInput.focus(), 100);
     };
 
-    btnCancel.addEventListener("click", () => {
-        modal.classList.remove("open");
-        pendingId = null;
-        pendingType = null;
-    });
+    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
 
     btnConfirm.addEventListener("click", async () => {
         const nome = nameInput.value.trim();
@@ -435,12 +407,9 @@
 
         modal.classList.remove("open");
         pendingId = null;
-        pendingType = null;
     });
 
-    nameInput.addEventListener("keydown", e => {
-        if (e.key === "Enter") btnConfirm.click();
-    });
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
 
     onValue(ref(db, "presentes"), snapshot => {
         document.getElementById("loading").style.display = "none";
