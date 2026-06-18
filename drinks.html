@@ -89,7 +89,6 @@
             margin-bottom: 1.2rem;
         }
 
-        /* Botão Elegante para Acompanhar Fila de Espera dentro dos Drinks */
         .btn-ver-fila {
             width: 100%;
             padding: 0.75rem 1rem;
@@ -183,7 +182,6 @@
         .tag-sem { background: #e6f6ec; color: #2e7d32; }
         .tag-com { background: #ffebee; color: #c62828; }
 
-        /* ── Estilização da Janela Flutuante (Modal) ── */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -329,7 +327,6 @@
         .btn-confirmar:hover:not(:disabled) { background: #96435c; }
         .btn-confirmar:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* ── Toast de Notificação ── */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -392,32 +389,44 @@
 
     <h3 class="section-title">Drinks Sem Álcool (Teens)</h3>
     <div class="item-list">
-        <button class="menu-item-btn" onclick="abrirPedido('Coquetel de Frutas Tropicais')">
-            <span>Coquetel de Frutas Tropicais</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Drink da Aniversariante (Sem Álcool)')">
+            <span>Drink da Aniversariante</span>
             <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
         </button>
-        <button class="menu-item-btn" onclick="abrirPedido('Soda Italiana Especial')">
-            <span>Soda Italiana Especial</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Piña Colada (Sem Álcool)')">
+            <span>Piña Colada</span>
             <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
         </button>
-        <button class="menu-item-btn" onclick="abrirPedido('Virgin Mojito Refrescante')">
-            <span>Virgin Mojito Refrescante</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Lagoa Azul (Sem Álcool)')">
+            <span>Lagoa Azul</span>
+            <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Soda Italiana Maçã Verde')">
+            <span>Soda Italiana Maçã Verde</span>
+            <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Soda Italiana Frutas Vermelhas')">
+            <span>Soda Italiana Frutas Vermelhas</span>
             <span class="badge-tag tag-sem">🟢 Sem Álcool</span>
         </button>
     </div>
 
     <h3 class="section-title title-alcool">Drinks Com Álcool (Adultos)</h3>
     <div class="item-list">
-        <button class="menu-item-btn" onclick="abrirPedido('Caipirinhas Variadas')">
-            <span>Caipirinhas Variadas</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Drink da Aniversariante (Com Álcool)')">
+            <span>Drink da Aniversariante</span>
             <span class="badge-tag tag-com">🔴 Contém Álcool</span>
         </button>
-        <button class="menu-item-btn" onclick="abrirPedido('Gin Tônica com Especiarias')">
-            <span>Gin Tônica com Especiarias</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Piña Colada (Com Álcool)')">
+            <span>Piña Colada</span>
             <span class="badge-tag tag-com">🔴 Contém Álcool</span>
         </button>
-        <button class="menu-item-btn" onclick="abrirPedido('Sex on the Beach')">
-            <span>Sex on the Beach</span>
+        <button class="menu-item-btn" onclick="abrirPedido('Lagoa Azul (Com Álcool)')">
+            <span>Lagoa Azul</span>
+            <span class="badge-tag tag-com">🔴 Contém Álcool</span>
+        </button>
+        <button class="menu-item-btn" onclick="abrirPedido('Gin Morango e Pêssego')">
+            <span>Gin Morango e Pêssego</span>
             <span class="badge-tag tag-com">🔴 Contém Álcool</span>
         </button>
     </div>
@@ -461,7 +470,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // 1. Chaves Oficiais do Banco de Dados (Projeto Lista de Presentes)
     const firebaseConfig = {
         apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
         authDomain: "lista-15-anos-5e046.firebaseapp.com",
@@ -481,36 +489,47 @@
     }
 
     const infoDrinks = {
-        "Coquetel de Frutas Tropicais": {
-            ingredientes: "Suco de laranja, suco de abacaxi, xarope de grenadine, fatias de frutas frescas e gelo moído.",
+        "Drink da Aniversariante (Sem Álcool)": {
+            ingredientes: "Suco de morango, xarope de morango e leite condensado.",
             alcool: false
         },
-        "Soda Italiana Especial": {
-            ingredientes: "Água gaseificada, xarope artesanal saborizado (Maçã Verde ou Morango), cubos de gelo e hortelã.",
+        "Drink da Aniversariante (Com Álcool)": {
+            ingredientes: "Suco de morango, xarope de morango, leite condensado e vodka.",
+            alcool: true
+        },
+        "Piña Colada (Sem Álcool)": {
+            ingredientes: "Suco de abacaxi, leite condensado e leite de coco.",
             alcool: false
         },
-        "Virgin Mojito Refrescante": {
-            ingredientes: "Hortelã fresca macerada, suco de limão siciliano, xarope de açúcar, água com gás e bastante gelo.",
+        "Piña Colada (Com Álcool)": {
+            ingredientes: "Suco de abacaxi, leite condensado, leite de coco e Rum.",
+            alcool: true
+        },
+        "Lagoa Azul (Sem Álcool)": {
+            ingredientes: "Curaçau blue (xarope sem álcool), suco de limão e Sprite.",
             alcool: false
         },
-        "Caipirinhas Variadas": {
-            ingredientes: "Frutas da estação à escolha (Limão/Morango/Abacaxi), açúcar, gelo e base alcoólica (Vodka Premium ou Cachaça).",
+        "Lagoa Azul (Com Álcool)": {
+            ingredientes: "Curaçau blue, suco de limão, Sprite e vodka.",
             alcool: true
         },
-        "Gin Tônica com Especiarias": {
-            ingredientes: "Gin Nacional, água tônica, fatias de limão taiti, zimbro ralado e especiarias selecionadas.",
+        "Gin Morango e Pêssego": {
+            ingredientes: "Energético sabor morango e pêssego, gin e especiarias.",
             alcool: true
         },
-        "Sex on the Beach": {
-            ingredientes: "Vodka, licor de pêssego, suco de laranja natural, xarope de cranberry para o degradê visual e gelo.",
-            alcool: true
+        "Soda Italiana Maçã Verde": {
+            ingredientes: "Xarope de maçã verde, suco de limão e água com gás.",
+            alcool: false
+        },
+        "Soda Italiana Frutas Vermelhas": {
+            ingredientes: "Xarope de frutas vermelhas, suco de limão e água com gás.",
+            alcool: false
         }
     };
 
     let drinkAtual = "";
-    let enviando = false; // ── Guard contra clique duplo
+    let enviando = false;
 
-    // ── Toast: exibe mensagem elegante no lugar do alert()
     let toastTimer = null;
     window.mostrarToast = function(titulo, mensagem, erro = false) {
         const toast = document.getElementById('toastNotif');
@@ -519,7 +538,6 @@
         document.getElementById('toastIcone').innerText = erro ? '❌' : '✅';
         toast.className = 'toast' + (erro ? ' toast-erro' : '');
 
-        // Força reflow para reiniciar animação caso já esteja visível
         void toast.offsetWidth;
         toast.classList.add('show');
 
@@ -561,9 +579,7 @@
         btn.innerText = "Pedir Drink";
     };
 
-    // 2. FUNÇÃO QUE ENVIA PARA O BANCO DE DADOS
     window.enviarPedidoFirebase = function() {
-        // ── Debounce: ignora cliques enquanto já está enviando
         if (enviando) return;
 
         let nomeInput = document.getElementById('nomeConvidado').value.trim();
@@ -576,7 +592,6 @@
 
         nomeInput = nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1).toLowerCase();
 
-        // ── Ativa estado de loading no botão e trava ele
         enviando = true;
         const btn = document.getElementById('btnConfirmar');
         btn.disabled = true;
@@ -588,17 +603,15 @@
             return;
         }
 
-        // 3. Monta o pacote de dados do pedido para enviar à "gaveta"
         const dadosPedido = {
             drink: drinkAtual,
             convidado: nomeInput,
             status: "pendente",
-            dataHora: serverTimestamp() // Pega a hora exata da nuvem do Google
+            dataHora: serverTimestamp()
         };
 
         const pedidosRef = ref(database, 'pedidos');
 
-        // 4. Salva no banco de dados
         push(pedidosRef, dadosPedido)
             .then(() => {
                 window.fecharPedido();
