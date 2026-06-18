@@ -61,7 +61,6 @@
             margin-top: 0.1rem;
         }
 
-        /* Painel mudou de colunas lado a lado para seções empilhadas (Top e Bottom) */
         .painel-fila {
             width: 100%;
             max-width: 600px;
@@ -81,7 +80,6 @@
             box-shadow: 0 6px 20px rgba(180, 80, 110, 0.04);
         }
 
-        /* Destaque máximo no topo para quem está PRONTO */
         .coluna-pronto {
             background: linear-gradient(175deg, #fff2f5 0%, #fdeef2 100%);
             border: 2px solid #e8b4c4;
@@ -135,7 +133,6 @@
             border-radius: 6px;
         }
 
-        /* Animação pulsante na seção superior */
         .coluna-pronto .item-fila {
             border-color: #e8b4c4;
             animation: pulse-brilho 2s infinite alternate;
@@ -149,7 +146,6 @@
             100% { box-shadow: 0 4px 12px rgba(180, 80, 110, 0.12); border-color: #d4869e; }
         }
 
-        /* ── Indicador de atualização ao vivo ── */
         .live-bar {
             width: 100%;
             max-width: 600px;
@@ -214,7 +210,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Chaves Oficiais do Banco de Dados (Projeto Lista de Presentes)
     const firebaseConfig = {
         apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
         authDomain: "lista-15-anos-5e046.firebaseapp.com",
@@ -237,7 +232,6 @@
         const pedidosRef = ref(database, 'pedidos');
 
         onValue(pedidosRef, (snapshot) => {
-            // Atualiza o horário da última sincronização
             const agora = new Date();
             document.getElementById('horaUpdate').innerText =
                 agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -253,8 +247,8 @@
             const dados = snapshot.val();
             const lista = Object.keys(dados).map(key => dados[key]);
 
-            // Ordenação: Drinks criados por último aparecem primeiro na lista
-            lista.sort((a, b) => (b.dataHora || 0) - (a.dataHora || 0));
+            // Ordenação: O primeiro que entrou na fila fica no topo (ordem cronológica)
+            lista.sort((a, b) => (a.dataHora || 0) - (b.dataHora || 0));
 
             let contPronto = 0;
             let contPendente = 0;
@@ -267,7 +261,6 @@
                     <span class="drink">${pedido.drink}</span>
                 `;
 
-                // Aplica a regra de negócio do limite rígido de 5 por seção
                 if (pedido.status === "pendente" && contPendente < 5) {
                     divPreparando.appendChild(item);
                     contPendente++;
@@ -278,12 +271,10 @@
             });
         });
     } else {
-        // Atualiza hora mesmo no mock local
         const agora = new Date();
         document.getElementById('horaUpdate').innerText =
             agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-        // Mock demonstrativo local para conferência visual do IntelliJ
         const divPronto = document.getElementById('listaPronto');
         divPronto.innerHTML = `
             <div class="item-fila"><span class="nome">Bárbara</span><span class="drink">Mojito Teen</span></div>
