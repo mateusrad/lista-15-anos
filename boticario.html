@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Especial O Boticário — 15 Anos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background: #fdf6f9; color: #2c2c2a; min-height: 100vh; padding: 2rem 1rem 4rem; }
+        .container { max-width: 720px; margin: 0 auto; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 6px; color: #D4537E; text-decoration: none; font-weight: 700; font-size: 14px; font-family: 'Urbanist', sans-serif; margin-bottom: 1.5rem; transition: color 0.2s, transform 0.2s; }
+        .back-link:hover { color: #993556; transform: translateX(-4px); }
+
+        .header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f4c0d1; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; font-style: italic; color: #2c2c2a; line-height: 1.2; margin-bottom: 8px; }
+        .header h1 span { color: #D4537E; font-weight: 600; }
+        .header-sub { font-size: 13px; color: #888780; font-weight: 300; line-height: 1.4; background: #FBEAF0; padding: 12px; border-radius: 8px; margin-top: 10px; display: inline-block;}
+
+        .section-title { font-family: 'Urbanist', sans-serif; font-size: 14px; font-weight: 700; color: #993556; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
+        .section-title::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(to right, #f4c0d1, transparent); }
+
+        .gift-list { display: flex; flex-direction: column; gap: 10px; }
+        .gift-item { background: #fff; border: 1px solid #f4c0d1; border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(153, 53, 86, 0.02); transition: transform 0.2s; }
+        .gift-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(153, 53, 86, 0.06); }
+        .item-number { width: 36px; height: 36px; border-radius: 50%; background: #FBEAF0; color: #993556; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .item-number.multi-ok { background: #E8F4F8; color: #1D70B8; font-size: 16px; }
+        .item-name { font-family: 'Urbanist', sans-serif; font-size: 15px; font-weight: 700; color: #2c2c2a; margin-bottom: 4px; }
+        .item-meta { font-size: 13px; color: #888780; line-height: 1.4; }
+
+        .claim-btn { font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 20px; border: 1px solid #D4537E; color: #993556; background: transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+        .claim-btn:hover { background: #D4537E; color: #fff; }
+        .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
+
+        #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
+        .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #app { display: none; }
+
+        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-bg.open { display: flex; }
+        .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
+        .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
+        .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .modal-actions { display: flex; gap: 8px; justify-content: center; }
+        .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
+        @media (max-width: 500px) { .gift-item { grid-template-columns: 1fr; text-align: center; justify-items: center; gap: 10px;} }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="beleza.html" class="back-link">← Voltar para Beleza</a>
+    <div id="loading"><div class="spinner"></div>Carregando produtos…</div>
+
+    <div id="app">
+        <div class="header">
+            <h1>Lista Especial <span>O Boticário</span></h1>
+            <p class="header-sub">Fique à vontade para pesquisar o nome dos produtos no site oficial ou comprar diretamente em uma loja física de sua preferência!</p>
+        </div>
+
+        <div class="section-title">🧴 Cuide-se Bem & Nativa SPA</div>
+        <div class="gift-list" id="list-boti"></div>
+
+        <div class="section-title">💄 Quem Disse, Berenice? (Maquiagem)</div>
+        <div class="gift-list" id="list-qdb"></div>
+    </div>
+</div>
+
+<div class="modal-bg" id="modal">
+    <div class="modal">
+        <h2>Apoiar sugestão 🎁</h2>
+        <p>Digite seu nome para confirmar sua escolha!</p>
+        <input type="text" id="modal-name" placeholder="Seu nome" maxlength="50" />
+        <div class="modal-actions">
+            <button class="btn-cancel" id="btn-cancel">Cancelar</button>
+            <button class="btn-confirm" id="btn-confirm">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
+        authDomain: "lista-15-anos-5e046.firebaseapp.com",
+        databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
+        projectId: "lista-15-anos-5e046",
+        storageBucket: "lista-15-anos-5e046.firebasestorage.app",
+        messagingSenderId: "219147274740",
+        appId: "1:219147274740:web:615135021aa9050b1891a1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+
+    const items = {
+        boti: [
+            { id: "m3", name: "Combo Deleite Caramelizado (Body Splash + Loção) 🍮💛", desc: "Fragrância doce e confortável para pós-banho." },
+            { id: "m4", name: "Combo Boa Noite (Loção 200ml + 2 Sabonetes) 🌌💤", desc: "Perfeito para a rotina relaxante de cuidados antes de dormir." },
+            { id: "m5", name: "Sabonetes em Barra Sortidos Cuide-se Bem Feira 🍇", desc: "Mix divertido com cheirinhos inspirados em frutas frescas." },
+            { id: "m6", name: "Body Splash Desodorante Colônia Beijinho 💋✨", desc: "Fragrância floral leve para usar a qualquer hora do dia." },
+            { id: "m7", name: "Combo Cuide-se Bem Rosa e Algodão + Refil Boa Noite 🌸", desc: "Hidratação corporal em dose dupla para garantir o estoque." },
+            { id: "m8", name: "Loção Corporal Show de Banho 200ml 🧼🚿", desc: "Fragrância inconfundível, leve e refrescante de banho tomado." },
+            { id: "m12", name: "Gel de Limpeza Facial Antioxidante Botik Vitamina C 🍊", desc: "Essencial para limpar e iluminar o rosto na rotina de skincare." },
+            { id: "m13", name: "Sabonete Líquido Perfumado Nativa SPA Ameixa Negra 🔮", desc: "Espuma cremosa com perfumação marcante e premium." },
+            { id: "m14", name: "Loção Corporal Nativa SPA Ameixa Negra 400ml ⚜️🍇", desc: "Hidratação profunda com quinoa para deixar a pele macia." }
+        ],
+        qdb: [
+            { id: "m9", name: "Batom e Blush Marrom Mochi Blur 🤎", desc: "Textura aveludada coringa: funciona como batom e blush." },
+            { id: "m10", name: "Batom e Blush Rosa Mochi Blur 🩷", desc: "Tom rosado clássico ideal para dar aquele ar de saúde natural." },
+            { id: "m11", name: "Glitter Líquido Multiuso Rosatix ✨🔮", desc: "Fácil de aplicar para iluminar o visual e dar um toque de glow." }
+        ]
+    };
+
+    let dbState = {};
+    let pendingId = null;
+
+    const modal = document.getElementById("modal");
+    const nameInput = document.getElementById("modal-name");
+    const btnConfirm = document.getElementById("btn-confirm");
+    const btnCancel = document.getElementById("btn-cancel");
+
+    function renderGroup(groupKey, targetId) {
+        const targetEl = document.getElementById(targetId);
+        targetEl.innerHTML = "";
+        items[groupKey].forEach((item, index) => {
+            const itemData = dbState[item.id] || {};
+            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
+            const claimed = count > 0;
+            targetEl.innerHTML += `
+                <div class="gift-item">
+                  <div class="item-number ${claimed ? "multi-ok" : ""}">${claimed ? "✓" : "✨"}</div>
+                  <div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-meta">
+                      ${item.desc}
+                      ${claimed ? `<br><span style="color:#1D70B8;font-weight:600;">· Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
+                    </div>
+                  </div>
+                  <div><button class="claim-btn ${claimed ? "multi-ok" : ""}" onclick="openModal('${item.id}')">Escolher</button></div>
+                </div>`;
+        });
+    }
+
+    window.openModal = function(id) { pendingId = id; nameInput.value = ""; modal.classList.add("open"); setTimeout(() => nameInput.focus(), 100); };
+    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
+    btnConfirm.addEventListener("click", async () => {
+        const nome = nameInput.value.trim();
+        if (!nome) { nameInput.focus(); return; }
+        if (!pendingId) return;
+        const itemRef = ref(db, "/presentes/" + pendingId);
+        await push(itemRef, nome);
+        modal.classList.remove("open");
+        pendingId = null;
+    });
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
+
+    onValue(ref(db, "presentes"), snapshot => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        dbState = snapshot.val() || {};
+        renderGroup("boti", "list-boti");
+        renderGroup("qdb", "list-qdb");
+    });
+</script>
+</body>
+</html>

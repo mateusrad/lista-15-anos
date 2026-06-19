@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Roupas — 15 Anos da Bárbara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #fdf6f9;
+            color: #2c2c2a;
+            min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* BOTÃO VOLTAR */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #D4537E;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'Urbanist', sans-serif;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .back-link:hover {
+            color: #993556;
+            transform: translateX(-4px);
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f4c0d1;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 400;
+            font-style: italic;
+            color: #2c2c2a;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .header h1 span { color: #D4537E; font-weight: 600; }
+
+        /* DESTAQUE DE TAMANHO */
+        .size-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4537E, #993556);
+            color: #fff;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 12px rgba(153, 53, 86, 0.2);
+            margin-top: 5px;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #993556;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1.5px;
+            background: linear-gradient(to right, #f4c0d1, transparent);
+        }
+
+        /* MURAL VISUAL PREMIUM (Cards com Setas) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 20px;
+        }
+
+        .gift-card {
+            background: #fff;
+            border: 1px solid #f4c0d1;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(153, 53, 86, 0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-gallery {
+            position: relative;
+            width: 100%;
+            height: 320px; /* Um pouco mais alto para mostrar bem as roupas */
+            background: #fafafa;
+        }
+
+        .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* SETAS DE NAVEGAÇÃO */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #993556;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            z-index: 5;
+        }
+
+        .nav-arrow:hover { background: rgba(255, 255, 255, 0.85); color: #D4537E; }
+        .nav-arrow.prev { left: 10px; }
+        .nav-arrow.next { right: 10px; }
+
+        /* Miniaturas de navegação (Dots) */
+        .gallery-nav {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 4px 8px;
+            border-radius: 12px;
+            backdrop-filter: blur(2px);
+            z-index: 4;
+        }
+
+        .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4537e; opacity: 0.4; border: none; cursor: pointer; }
+        .nav-dot.active { opacity: 1; transform: scale(1.1); }
+
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-family: 'Urbanist', sans-serif; font-size: 16px; font-weight: 700; color: #2c2c2a; margin-bottom: 8px; }
+        .card-desc { font-size: 13px; color: #888780; line-height: 1.5; margin-bottom: 16px; flex: 1; }
+        .card-status { font-size: 12px; font-weight: 600; color: #1D70B8; background: #E8F4F8; padding: 6px 12px; border-radius: 6px; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; }
+
+        /* BOTÕES */
+        .claim-btn {
+            width: 100%;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #D4537E;
+            color: #993556;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .claim-btn:hover { background: #D4537E; color: #fff; }
+        .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
+        .claim-btn.multi-ok:hover { background: #1D70B8; color: #fff; }
+
+        /* LOADING & MODAL */
+        #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
+        .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #app { display: none; }
+
+        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+        .modal-bg.open { display: flex; }
+        .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
+        .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
+        .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .modal input:focus { border-color: #D4537E; }
+        .modal-actions { display: flex; gap: 8px; justify-content: center; }
+        .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back-link">← Voltar para o Menu</a>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        Carregando inspirações de roupas…
+    </div>
+
+    <div id="app">
+        <div class="header">
+            <h1>Roupas & <span>Estilos</span></h1>
+            <div class="size-highlight">A Bárbara veste PP ou P! 👗</div>
+        </div>
+
+        <div class="section-title">✨ Inspirações de Looks</div>
+        <div class="cards-grid" id="mural-roupas"></div>
+    </div>
+
+</div>
+
+<div class="modal-bg" id="modal">
+    <div class="modal">
+        <h2>Apoiar sugestão 🎁</h2>
+        <p>Digite seu nome para avisar à Bárbara que você escolheu presentear com este estilo!</p>
+        <input type="text" id="modal-name" placeholder="Seu nome" maxlength="50" />
+        <div class="modal-actions">
+            <button class="btn-cancel" id="btn-cancel">Cancelar</button>
+            <button class="btn-confirm" id="btn-confirm">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
+        authDomain: "lista-15-anos-5e046.firebaseapp.com",
+        databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
+        projectId: "lista-15-anos-5e046",
+        storageBucket: "lista-15-anos-5e046.firebasestorage.app",
+        messagingSenderId: "219147274740",
+        appId: "1:219147274740:web:615135021aa9050b1891a1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+
+    // Itens da página de roupas
+    const items = {
+        roupas: [
+            {
+                id: "rp_look_parque",
+                name: "Look Conforto para os Parques 🎢",
+                desc: "Conjuntinhos confortáveis, moletons ou roupas leves que são perfeitas para bater perna o dia inteiro na Disney.",
+                // Coloque as imagens de exemplo que você salvar na pasta img
+                images: ["img/roupa01.png", "img/roupa02.png"],
+                currentImage: 0
+            },
+            {
+                id: "rp_look_jantar",
+                name: "Look para Jantares Especiais 🍽️",
+                desc: "Vestidos ou peças um pouco mais arrumadinhas para os jantares temáticos que faremos durante a viagem.",
+                images: ["img/roupa03.png", "img/roupa04.png"],
+                currentImage: 0
+            }
+            // Pode adicionar quantos "looks" quiser seguindo este mesmo padrão!
+        ]
+    };
+
+    let dbState = {};
+    let pendingId = null;
+
+    const modal = document.getElementById("modal");
+    const nameInput = document.getElementById("modal-name");
+    const btnConfirm = document.getElementById("btn-confirm");
+    const btnCancel = document.getElementById("btn-cancel");
+
+    // Lógica de Navegação do Carrossel
+    window.updateGalleryIndex = function(itemId, index) {
+        const item = items.roupas.find(i => i.id === itemId);
+        if (!item) return;
+
+        if (index >= item.images.length) index = 0;
+        if (index < 0) index = item.images.length - 1;
+
+        item.currentImage = index;
+
+        const galleryEl = document.getElementById(`gallery-${itemId}`);
+        if(galleryEl) {
+            const imgEl = galleryEl.querySelector('.card-img');
+            const dotEls = galleryEl.querySelectorAll('.nav-dot');
+            const btnPrev = galleryEl.querySelector('.nav-arrow.prev');
+            const btnNext = galleryEl.querySelector('.nav-arrow.next');
+
+            imgEl.src = item.images[index];
+
+            if(btnPrev) btnPrev.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index - 1})`);
+            if(btnNext) btnNext.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index + 1})`);
+
+            dotEls.forEach((dot, idx) => {
+                idx === index ? dot.classList.add('active') : dot.classList.remove('active');
+            });
+        }
+    };
+
+    // Renderiza o painel de Roupas
+    function renderRoupas() {
+        const targetEl = document.getElementById("mural-roupas");
+        targetEl.innerHTML = "";
+
+        items.roupas.forEach(item => {
+            const itemData = dbState[item.id] || {};
+            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
+            const claimed = count > 0;
+            const multImg = item.images.length > 1;
+
+            let dotsHtml = "";
+            item.images.forEach((img, idx) => {
+                dotsHtml += `<button class="nav-dot ${idx === item.currentImage ? 'active' : ''}" onclick="updateGalleryIndex('${item.id}', ${idx})"></button>`;
+            });
+
+            targetEl.innerHTML += `
+                <div class="gift-card">
+                    <div class="card-gallery" id="gallery-${item.id}">
+                        <img src="${item.images[item.currentImage]}" class="card-img" alt="${item.name}">
+                        ${multImg ? `
+                            <button class="nav-arrow prev" onclick="updateGalleryIndex('${item.id}', ${item.currentImage - 1})">‹</button>
+                            <button class="nav-arrow next" onclick="updateGalleryIndex('${item.id}', ${item.currentImage + 1})">›</button>
+                            <div class="gallery-nav">${dotsHtml}</div>
+                        ` : ''}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-desc">${item.desc}</div>
+                        ${claimed ? `<div class="card-status">👥 Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</div>` : ''}
+                        <button class="claim-btn ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">
+                            ${claimed ? 'Apoiar também' : 'Escolher este Estilo'}
+                        </button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    window.openModal = function(id) {
+        pendingId = id;
+        nameInput.value = "";
+        modal.classList.add("open");
+        setTimeout(() => nameInput.focus(), 100);
+    };
+
+    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
+
+    btnConfirm.addEventListener("click", async () => {
+        const nome = nameInput.value.trim();
+        if (!nome) { nameInput.focus(); return; }
+        if (!pendingId) return;
+
+        const itemRef = ref(db, "/presentes/" + pendingId);
+        await push(itemRef, nome);
+
+        modal.classList.remove("open");
+        pendingId = null;
+    });
+
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
+
+    onValue(ref(db, "presentes"), snapshot => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        dbState = snapshot.val() || {};
+        renderRoupas();
+    });
+</script>
+</body>
+</html>

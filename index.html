@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Lista de Presentes — 15 Anos</title>
+    <title>Lista de Presentes — 15 Anos da Bárbara</title>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,19 +13,19 @@
             background: #fdf6f9;
             color: #2c2c2a;
             min-height: 100vh;
-            padding: 2rem 1rem 4rem;
+            padding: 3rem 1rem 4rem;
         }
 
         .container {
-            max-width: 720px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid #f4c0d1;
         }
 
@@ -44,432 +44,166 @@
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 400;
             font-style: italic;
             color: #2c2c2a;
             line-height: 1.2;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .header h1 span { color: #D4537E; font-weight: 600; }
 
         .header-sub {
-            font-size: 13px;
+            font-size: 14px;
             color: #888780;
             font-weight: 300;
             letter-spacing: 0.04em;
-            line-height: 1.4;
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.5;
         }
 
-        /* SECTION TITLE */
-        .section-title {
-            font-family: 'Urbanist', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            color: #993556;
-            margin: 2.5rem 0 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+        /* MENU GRID DE CATEGORIAS */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 1rem;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1.5px;
-            background: linear-gradient(to right, #f4c0d1, transparent);
-        }
-
-        .section-desc {
-            font-size: 12px;
-            color: #888780;
-            margin-bottom: 1.25rem;
-        }
-
-        /* LISTA PADRÃO (Bolsas e Beleza) */
-        .gift-list { display: flex; flex-direction: column; gap: 8px; }
-
-        .gift-item {
+        .category-card {
             background: #fff;
             border: 1px solid #f4c0d1;
-            border-radius: 12px;
-            padding: 14px;
-            display: grid;
-            grid-template-columns: 36px 1fr auto;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .item-number {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #FBEAF0;
-            color: #993556;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .item-number.multi-ok { background: #E8F4F8; color: #1D70B8; font-size: 16px; }
-
-        .item-name { font-size: 14px; font-weight: 500; color: #2c2c2a; margin-bottom: 3px; }
-
-        .item-meta {
-            font-size: 12px;
-            color: #888780;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .item-meta a { color: #1D70B8; text-decoration: underline; font-weight: 600; }
-        .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; background: #1D70B8; }
-
-        /* MURAL VISUAL PREMIUM (Cards) */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 20px;
-        }
-
-        .gift-card {
-            background: #fff;
-            border: 1px solid #f4c0d1;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(153, 53, 86, 0.02);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-gallery {
-            position: relative;
-            width: 100%;
-            height: 240px;
-            background: #fafafa;
-        }
-
-        .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* SETAS DE NAVEGAÇÃO */
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(2px);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            color: #993556;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-            z-index: 5;
-        }
-
-        .nav-arrow:hover { background: rgba(255, 255, 255, 0.85); color: #D4537E; }
-        .nav-arrow.prev { left: 10px; }
-        .nav-arrow.next { right: 10px; }
-
-        /* Miniaturas de navegação (Dots) */
-        .gallery-nav {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 4px 8px;
-            border-radius: 12px;
-            backdrop-filter: blur(2px);
-            z-index: 4;
-        }
-
-        .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4537e; opacity: 0.4; border: none; cursor: pointer; }
-        .nav-dot.active { opacity: 1; transform: scale(1.1); }
-
-        .card-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
-        .card-title { font-family: 'Urbanist', sans-serif; font-size: 15px; font-weight: 700; color: #2c2c2a; margin-bottom: 6px; }
-        .card-desc { font-size: 12px; color: #888780; line-height: 1.4; margin-bottom: 12px; flex: 1; }
-        .card-status { font-size: 11px; font-weight: 600; color: #1D70B8; background: #E8F4F8; padding: 4px 10px; border-radius: 6px; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
-
-        /* BOTÕES */
-        .claim-btn {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 6px 16px;
             border-radius: 20px;
-            border: 1px solid #D4537E;
-            color: #993556;
-            background: transparent;
-            cursor: pointer;
-            transition: background 0.15s;
-            white-space: nowrap;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(153, 53, 86, 0.03);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
-        .claim-btn:hover { background: #FBEAF0; }
-        .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
-        .card-btn { width: 100%; padding: 8px; border-radius: 25px; font-weight: 700; }
 
-        /* LOADING & MODAL */
-        #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
-        .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        #app { display: none; }
+        /* Efeito de Zoom e Destaque no Card */
+        .category-card:hover {
+            transform: translateY(-4px);
+            border-color: #D4537E;
+            box-shadow: 0 8px 25px rgba(153, 53, 86, 0.12);
+        }
 
-        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
-        .modal-bg.open { display: flex; }
-        .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-        .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
-        .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
-        .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
-        .modal input:focus { border-color: #D4537E; }
-        .modal-actions { display: flex; gap: 8px; justify-content: center; }
-        .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
-        .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
+        /* Textura ou imagem de fundo suave ilustrativa para cada card */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.08;
+            transition: opacity 0.25s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 0.13;
+        }
+
+        /* Diferenciando fundos conceituais (opcional: você pode trocar por imagens reais da pasta img/) */
+        .cat-calcados::before { background-image: url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500'); }
+        .cat-roupas::before { background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500'); }
+        .cat-bolsas::before { background-image: url('https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500'); }
+        .cat-beleza::before { background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500'); }
+
+        .card-body-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 1rem;
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .card-title {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #993556;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #888780;
+            font-weight: 400;
+        }
+
+        /* FOOTER DE APOIO */
+        .footer-info {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 12px;
+            color: #a3a29b;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <div id="loading">
-        <div class="spinner"></div>
-        Carregando lista de presentes…
+    <div class="header">
+        <div class="header-tag">🌸 Portal de Sugestões</div>
+        <h1>Lista de <span>Presentes</span></h1>
+        <p class="header-sub">✦ Escolha uma das categorias abaixo para conferir as sugestões de mimos e os estilos favoritos da Bárbara! ✦</p>
     </div>
 
-    <div id="app">
-        <div class="header">
-            <div class="header-tag">🌸 Lista de Presentes</div>
-            <h1>Aniversário de <span>15 anos</span></h1>
-            <p class="header-sub">✦ Escolha um item para presentear a Bárbara. Mais de uma pessoa pode escolher a mesma opção! ✦</p>
-        </div>
+    <div class="categories-grid">
 
-        <div class="section-title">✨ Sugestões Especiais</div>
-        <div class="section-desc">Confira os modelos favoritos da Bárbara e escolha o local de compra de sua preferência! Use as setas para navegar.</div>
-        <div class="cards-grid" id="mural-especiais"></div>
+        <a href="calcados.html" class="category-card cat-calcados">
+            <div class="card-body-content">
+                <span class="card-icon">👟</span>
+                <div class="card-title">Calçados</div>
+                <div class="card-subtitle">Tamanho & Inspirações Favoritas</div>
+            </div>
+        </a>
 
-        <div class="section-title">👜 Bolsas e Acessórios</div>
-        <div class="section-desc">Modelos práticos recomendados para passeios e uso diário.</div>
-        <div class="gift-list" id="list-bolsas"></div>
+        <a href="roupas.html" class="category-card cat-roupas">
+            <div class="card-body-content">
+                <span class="card-icon">👗</span>
+                <div class="card-title">Roupas</div>
+                <div class="card-subtitle">Estilos & Tamanhos Escolhidos</div>
+            </div>
+        </a>
 
-        <div class="section-title">💄 Beleza e Autocuidado</div>
-        <div class="section-desc">Maquiagens, colônias e mimos queridinhos de skincare.</div>
-        <div class="gift-list" id="list-beleza"></div>
+        <a href="bolsas.html" class="category-card cat-bolsas">
+            <div class="card-body-content">
+                <span class="card-icon">👜</span>
+                <div class="card-title">Bolsas & Acessórios</div>
+                <div class="card-subtitle">Sugestões com Links Diretos</div>
+            </div>
+        </a>
+
+        <a href="beleza.html" class="category-card cat-beleza">
+            <div class="card-body-content">
+                <span class="card-icon">💄</span>
+                <div class="card-title">Beleza & Autocuidado</div>
+                <div class="card-subtitle">Maquiagens e Skincare Ativos</div>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="footer-info">
+        ✦ Muito obrigado por fazer parte deste momento com a nossa família! ✦
     </div>
 
 </div>
 
-<div class="modal-bg" id="modal">
-    <div class="modal">
-        <h2>Reservar presente 🎁</h2>
-        <p>Digite seu nome para confirmar. Assim a aniversariante saberá quem está enviando!</p>
-        <input type="text" id="modal-name" placeholder="Seu nome" maxlength="50" />
-        <div class="modal-actions">
-            <button class="btn-cancel" id="btn-cancel">Cancelar</button>
-            <button class="btn-confirm" id="btn-confirm">Confirmar</button>
-        </div>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCX-HHIJIuB6B2XlN74HJf2zNBHLdTTC0I",
-        authDomain: "lista-15-anos-5e046.firebaseapp.com",
-        databaseURL: "https://lista-15-anos-5e046-default-rtdb.firebaseio.com",
-        projectId: "lista-15-anos-5e046",
-        storageBucket: "lista-15-anos-5e046.firebasestorage.app",
-        messagingSenderId: "219147274740",
-        appId: "1:219147274740:web:615135021aa9050b1891a1"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db  = getDatabase(app);
-
-    const items = {
-        especiais: [
-            { id: "sp_tenis_pop", name: "Tênis Abotinado Conforto Pop 👟✨", desc: "Estilo cano alto perfeito! Um dos favoritos da Bárbara por ser confortável e ideal para compor os looks de passeio.", images: ["img/tenis01.png", "img/tenis02.png", "img/tenis03.png", "img/tenis04.png"], currentImage: 0 }
-        ],
-        bolsas: [
-            { id: "b1", name: "Bolsa Tiracolo Prática para os Parques 🎢", desc: "Compacta e leve, ótima para celular, documentos e o passaporte.", link: "https://www.lojasrenner.com.br/p/bolsa-pequena-em-pu-com-alca-longa-ajustavel/-/A-931239394-br.lr?sku=931239407" },
-            { id: "b2", name: "Bolsa Estilo Baguete para Jantares 🍽️", desc: "Modelo clássico e arrumadinho para jantares especiais.", link: "https://www.lojasrenner.com.br/p/bolsa-baguete-pequena-em-pu-com-ajuste-de-alca/-/A-930910300-br.lr" },
-            { id: "b3", name: "Bolsa Transversal Textura Croco ✨", desc: "Estilo moderno com textura croco para saídas à noite.", link: "https://www.lojasrenner.com.br/p/bolsa-transversal-croco-em-pu/-/A-931004966-COR931004966-PRETOAC.br.lr" },
-            { id: "b4", name: "Mini Bolsa Transversal Dia a Dia 🛍️", desc: "A básica indispensável que combina com qualquer roupa.", link: "https://www.lojasrenner.com.br/p/bolsa-transversal-pequena-em-pu-com-alca-longa-ajustavel/-/A-930673316-br.lr" }
-        ],
-        beleza: [
-            { id: "m1", name: "Gloss Lipchilli Franboesa (Fran by Franciny Ehlke) 💄", desc: "Hidratação com muito brilho e o famoso efeito de volume nos lábios.", link: "https://franbyfr.com.br/products/gloss-fran-by-franciny-ehlke-franboesa?srsltid=AfmBOooTA9BwmFF6h7UlcOvDBUKAfDOKrxWxJc3UAWMCu0YfANS5_HeL" },
-            { id: "m2", name: "Bride Kit Edição Limitada (Franciny Ehlke) 💍✨", desc: "Kit exclusivo sofisticado para looks incríveis em fotos.", link: "https://empreendermake.com.br/produtos/bride-kit-fran-by-franciny-ehlke-edicao-limitada-c-01-fran-12108-z5epd/?variant=1383378894&pf=mc" },
-            { id: "m3", name: "Combo Deleite Caramelizado (Body Splash + Loção 400ml) 🍮💛", desc: "Fragrância doce e confortável para pós-banho.", link: "https://www.boticario.com.br/-combo-cuide-se-bem-deleite-caramelizado-body-splash-200ml-locao-corporal-400ml-" },
-            { id: "m4", name: "Combo Boa Noite (Loção Corporal 200ml + 2 Sabonetes) 🌌💤", desc: "Perfeito para a rotina relaxante de cuidados antes de dormir.", link: "https://www.boticario.com.br/combo-cuide-se-bem-boa-noite-locao-corporal-200ml-sabonetes-em-barra-2x80g" },
-            { id: "m5", name: "Sabonetes em Barra Sortidos Cuide-se Bem Feira 🍇🧺", desc: "Mix divertido com cheirinhos inspirados em frutas frescas.", link: "https://www.boticario.com.br/sabonetes-em-barra-sortidos-cuidese-bem-feira-4x80g/" },
-            { id: "m6", name: "Body Splash Desodorante Colônia Beijinho 200ml 💋✨", desc: "Fragrância floral leve para usar a qualquer hora do dia.", link: "https://www.boticario.com.br/body-splash-desodorante-colonia-cuidese-bem-beijinho-200ml/" },
-            { id: "m7", name: "Combo Cuide-se Bem Rosa e Algodão 400ml + Refil Boa Noite 🌸", desc: "Hidratação corporal em dose dupla para garantir o estoque.", link: "https://www.boticario.com.br/combo-cuidese-bem-locao-corporal-rosa-e-algodao-400ml-refil-boa-noite-350ml/" },
-            { id: "m8", name: "Loção Hidratante Corporal Show de Banho 200ml 🧼🚿", desc: "Fragrância inconfundível, leve e refrescante de banho tomado.", link: "https://www.boticario.com.br/locao-desodorante-hidratante-corporal-cuidese-bem-show-de-banho-200ml-v2/" },
-            { id: "m9", name: "Batom e Blush Multifuncional Marrom Mochi Blur 🤎", desc: "Textura aveludada coringa: funciona como batom e blush.", link: "https://www.boticario.com.br/batom-e-blush-multifuncional-marrom-mochi-blur-quem-disse-berenice-35g/" },
-            { id: "m10", name: "Batom e Blush Multifuncional Rosa Mochi Blur 🩷", desc: "Tom rosado clássico ideal para dar aquele ar de saúde natural.", link: "https://www.boticario.com.br/batom-e-blush-multifuncional-rosa-mochi-blur-quem-disse-berenice-35g/" },
-            { id: "m11", name: "Glitter Líquido Multiuso Rosatix ✨🔮", desc: "Fácil de aplicar para iluminar o visual e dar um toque de glow.", link: "https://www.boticario.com.br/glitter-liquido-multiuso-rosatix-quem-disse-berenice-4ml/" },
-            { id: "m12", name: "Gel de Limpeza Facial Antioxidante Botik Vitamina C 🍊", desc: "Essencial para limpar e iluminar o rosto na rotina de skincare.", link: "https://www.boticario.com.br/gel-de-limpeza-facial-antioxidante-botik-vitamina-c-200g-v2/" },
-            { id: "m13", name: "Sabonete Líquido Perfumado Nativa SPA Ameixa Negra 🧴🔮", desc: "Espuma cremosa com perfumação marcante e premium.", link: "https://www.boticario.com.br/santonete-liquido-perfumado-nativa-spa-ameixa-negra-250ml-v2/" },
-            { id: "m14", name: "Loção Hidratante Corporal Nativa SPA Ameixa Negra 400ml ⚜️🍇", desc: "Hidratação profunda com quinoa para deixar a pele muito macia.", link: "https://www.boticario.com.br/locao-hidratante-desodorante-corporal-nativa-spa-ameixa-negra-400ml-v2/" }
-        ]
-    };
-
-    let dbState = {};
-    let pendingId = null;
-
-    const modal = document.getElementById("modal");
-    const nameInput = document.getElementById("modal-name");
-    const btnConfirm = document.getElementById("btn-confirm");
-    const btnCancel = document.getElementById("btn-cancel");
-
-    // Lógica Corrigida de Navegação (Muda o estado real e atualiza os botões)
-    window.updateGalleryIndex = function(itemId, index) {
-        const item = items.especiais.find(i => i.id === itemId);
-        if (!item) return;
-
-        // Gerencia o loop infinito das fotos
-        if (index >= item.images.length) index = 0;
-        if (index < 0) index = item.images.length - 1;
-
-        // CORREÇÃO CRÍTICA: Atualiza o estado interno da imagem atual no objeto
-        item.currentImage = index;
-
-        // Atualiza a imagem principal e os dots na tela
-        const galleryEl = document.getElementById(`gallery-${itemId}`);
-        if(galleryEl) {
-            const imgEl = galleryEl.querySelector('.card-img');
-            const dotEls = galleryEl.querySelectorAll('.nav-dot');
-            const btnPrev = galleryEl.querySelector('.nav-arrow.prev');
-            const btnNext = galleryEl.querySelector('.nav-arrow.next');
-
-            imgEl.src = item.images[index];
-
-            // Atualiza dinamicamente as chamadas de clique nos botões de seta
-            if(btnPrev) btnPrev.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index - 1})`);
-            if(btnNext) btnNext.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index + 1})`);
-
-            dotEls.forEach((dot, idx) => {
-                idx === index ? dot.classList.add('active') : dot.classList.remove('active');
-            });
-        }
-    };
-
-    // Renderiza o painel de Cards Premium
-    function renderPremiumGroup() {
-        const targetEl = document.getElementById("mural-especiais");
-        targetEl.innerHTML = "";
-
-        items.especiais.forEach(item => {
-            const itemData = dbState[item.id] || {};
-            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
-            const claimed = count > 0;
-            const multImg = item.images.length > 1;
-
-            let dotsHtml = "";
-            item.images.forEach((img, idx) => {
-                dotsHtml += `<button class="nav-dot ${idx === item.currentImage ? 'active' : ''}" onclick="updateGalleryIndex('${item.id}', ${idx})"></button>`;
-            });
-
-            targetEl.innerHTML += `
-                <div class="gift-card">
-                    <div class="card-gallery" id="gallery-${item.id}">
-                        <img src="${item.images[item.currentImage]}" class="card-img" alt="${item.name}">
-                        ${multImg ? `
-                            <button class="nav-arrow prev" onclick="updateGalleryIndex('${item.id}', ${item.currentImage - 1})">‹</button>
-                            <button class="nav-arrow next" onclick="updateGalleryIndex('${item.id}', ${item.currentImage + 1})">›</button>
-                            <div class="gallery-nav">${dotsHtml}</div>
-                        ` : ''}
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title">${item.name}</div>
-                        <div class="card-desc">${item.desc}</div>
-                        ${claimed ? `<div class="card-status">👥 Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</div>` : ''}
-                        <button class="claim-btn card-btn ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">Escolher Presente</button>
-                    </div>
-                </div>`;
-        });
-    }
-
-    // Renderiza as Linhas Convencionais
-    function renderStandardGroup(groupId, listElementId) {
-        const targetEl = document.getElementById(listElementId);
-        targetEl.innerHTML = "";
-
-        items[groupId].forEach(item => {
-            const itemData = dbState[item.id] || {};
-            const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
-            const claimed = count > 0;
-
-            targetEl.innerHTML += `
-                <div class="gift-item">
-                  <div class="item-number ${claimed ? "multi-ok" : ""}">
-                    ${claimed ? "✓" : "✨"}
-                  </div>
-                  <div>
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-meta">
-                      <span class="dot"></span>
-                      ${item.desc} · <a href="${item.link}" target="_blank">Ver link sugerido</a>
-                      ${claimed ? `<span style="color:#1D70B8;font-weight:600">· Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
-                    </div>
-                  </div>
-                  <div>
-                    <button class="claim-btn ${claimed ? "multi-ok" : ""}" onclick="openModal('${item.id}')">Escolher</button>
-                  </div>
-                </div>`;
-        });
-    }
-
-    function renderAll(state) {
-        dbState = state || {};
-        renderPremiumGroup();
-        renderStandardGroup("bolsas", "list-bolsas");
-        renderStandardGroup("beleza", "list-beleza");
-    }
-
-    window.openModal = function(id) {
-        pendingId = id;
-        nameInput.value = "";
-        modal.classList.add("open");
-        setTimeout(() => nameInput.focus(), 100);
-    };
-
-    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
-
-    btnConfirm.addEventListener("click", async () => {
-        const nome = nameInput.value.trim();
-        if (!nome) { nameInput.focus(); return; }
-        if (!pendingId) return;
-
-        const itemRef = ref(db, "/presentes/" + pendingId);
-        await push(itemRef, nome);
-
-        modal.classList.remove("open");
-        pendingId = null;
-    });
-
-    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
-
-    onValue(ref(db, "presentes"), snapshot => {
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("app").style.display = "block";
-        renderAll(snapshot.val());
-    });
-</script>
 </body>
 </html>
