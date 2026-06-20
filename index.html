@@ -151,6 +151,46 @@
             font-size: 12px;
             color: #a3a29b;
         }
+
+        /* ESTILO DA ASSINATURA NO RODAPÉ */
+        .developer-signature {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #a3a29b; /* Cor suave padrão */
+            font-size: 11px;
+            margin-top: 1rem;
+            opacity: 0.8;
+            transition: opacity 0.2s, color 0.2s;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .developer-signature:hover {
+            opacity: 1;
+            color: #D4537E; /* Muda para a cor de destaque ao passar o mouse */
+        }
+
+        .dev-logo {
+            height: 20px; /* Tamanho discreto do logo */
+            width: auto;
+            display: block;
+        }
+
+        .dev-name {
+            font-weight: 700;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .developer-signature:hover .dev-name {
+            border-color: #D4537E; /* Cria um sublinhado elegante no hover */
+        }
+
+        @media (max-width: 500px) {
+            .developer-signature { flex-direction: column; gap: 6px; }
+        }
     </style>
 </head>
 <body>
@@ -202,6 +242,11 @@
     <div class="footer-info">
         ✦ Muito obrigado por fazer parte deste momento com a nossa família! ✦
     </div>
+
+    <a href="LINK_DO_SEU_PORTIFOLIO_AQUI" target="_blank" class="developer-signature">
+        <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" class="dev-logo" />
+        <span>Code & Design por <span class="dev-name">Mateus Rosa</span></span>
+    </a>
 
 </div>
 
