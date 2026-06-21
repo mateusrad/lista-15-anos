@@ -4,30 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Beleza & Autocuidado — 15 Anos</title>
+    <!-- IMPORTAÇÃO DE FONTES -->
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
     <style>
+        /* =========================================
+           1. RESET & BASE
+        ========================================= */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background: #fdf6f9; color: #2c2c2a; min-height: 100vh; padding: 2rem 1rem 4rem; }
-        .container { max-width: 720px; margin: 0 auto; }
+        body { font-family: 'Lato', sans-serif; background: #fdf6f9; color: #2c2c2a; min-height: 100vh; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 720px; flex-grow: 1; }
 
+        /* =========================================
+           2. NAVEGAÇÃO & CABEÇALHO
+        ========================================= */
         .back-link { display: inline-flex; align-items: center; gap: 6px; color: #D4537E; text-decoration: none; font-weight: 700; font-size: 14px; font-family: 'Urbanist', sans-serif; margin-bottom: 1.5rem; transition: color 0.2s, transform 0.2s; }
         .back-link:hover { color: #993556; transform: translateX(-4px); }
-
         .header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f4c0d1; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; font-style: italic; color: #2c2c2a; line-height: 1.2; margin-bottom: 8px; }
         .header h1 span { color: #D4537E; font-weight: 600; }
         .header-sub { font-size: 13px; color: #888780; font-weight: 300; letter-spacing: 0.04em; line-height: 1.4; }
-
         .section-title { font-family: 'Urbanist', sans-serif; font-size: 14px; font-weight: 700; color: #993556; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
         .section-title::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(to right, #f4c0d1, transparent); }
 
-        /* CARD DESTAQUE BOTICÁRIO */
+        /* =========================================
+           3. LISTA SIMPLES E BOTICÁRIO
+        ========================================= */
         .boticario-card { display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #FBEAF0, #fdf6f9); border: 2px dashed #D4537E; border-radius: 16px; padding: 24px; text-decoration: none; color: #2c2c2a; transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 2rem; text-align: center; }
         .boticario-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(153, 53, 86, 0.1); border-style: solid; }
         .boticario-card h2 { font-family: 'Urbanist', sans-serif; font-size: 20px; color: #993556; margin-bottom: 6px; }
         .boticario-card p { font-size: 13px; color: #888780; }
 
-        .gift-list { display: flex; flex-direction: column; gap: 10px; }
+        .gift-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 3rem; }
         .gift-item { background: #fff; border: 1px solid #f4c0d1; border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(153, 53, 86, 0.02); transition: transform 0.2s; }
         .gift-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(153, 53, 86, 0.06); }
         .item-number { width: 36px; height: 36px; border-radius: 50%; background: #FBEAF0; color: #993556; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -36,33 +43,83 @@
         .item-meta { font-size: 13px; color: #888780; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; line-height: 1.4; }
         .item-meta a { color: #D4537E; text-decoration: none; font-weight: 700; border-bottom: 1px solid #D4537E; padding-bottom: 1px;}
         .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; background: #f4c0d1; }
-
         .claim-btn { font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 20px; border: 1px solid #D4537E; color: #993556; background: transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
         .claim-btn:hover { background: #D4537E; color: #fff; }
         .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
 
+        /* =========================================
+           4. GALERIA DE FOTOS (SKINCARE)
+        ========================================= */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+        .gift-card { background: #fff; border: 1px solid #f4c0d1; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(153, 53, 86, 0.03); display: flex; flex-direction: column; }
+        .card-gallery { position: relative; width: 100%; height: 280px; background: #fafafa; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(2px); border: none; border-radius: 50%; cursor: pointer; color: #993556; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.15s; z-index: 5; }
+        .nav-arrow:hover { background: rgba(255, 255, 255, 0.85); color: #D4537E; }
+        .nav-arrow.prev { left: 10px; }
+        .nav-arrow.next { right: 10px; }
+        .gallery-nav { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; background: rgba(255, 255, 255, 0.7); padding: 4px 8px; border-radius: 12px; backdrop-filter: blur(2px); z-index: 4; }
+        .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4537e; opacity: 0.4; border: none; cursor: pointer; }
+        .nav-dot.active { opacity: 1; transform: scale(1.1); }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-family: 'Urbanist', sans-serif; font-size: 16px; font-weight: 700; color: #2c2c2a; margin-bottom: 8px; }
+        .card-desc { font-size: 13px; color: #888780; line-height: 1.5; margin-bottom: 16px; flex: 1; }
+        .card-status { font-size: 12px; font-weight: 600; color: #1D70B8; background: #E8F4F8; padding: 6px 12px; border-radius: 6px; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-acao-card { width: 100%; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 25px; border: 1px solid #D4537E; color: #993556; background: transparent; cursor: pointer; transition: all 0.15s; }
+        .btn-acao-card:hover { background: #D4537E; color: #fff; }
+        .btn-acao-card.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
+
+        /* =========================================
+           5. MODAL & LOADING
+        ========================================= */
         #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
         .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         #app { display: none; }
-
         .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-bg.open { display: flex; }
         .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
         .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
         .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
         .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .modal input:focus { border-color: #D4537E; }
         .modal-actions { display: flex; gap: 8px; justify-content: center; }
         .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
         .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
         @media (max-width: 500px) { .gift-item { grid-template-columns: 1fr; text-align: center; justify-items: center; gap: 10px;} .item-meta { justify-content: center; } }
+
+        /* =========================================
+           6. TOAST NOTIFICATION
+        ========================================= */
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #2c2c2a; color: #fff; font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 200; white-space: nowrap; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast-icon { color: #97C459; font-size: 16px; }
+
+        /* =========================================
+           7. ASSINATURA RODAPÉ
+        ========================================= */
+        .dev-footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; }
+        .dev-footer a { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+        .dev-footer img { height: 38px; width: auto; opacity: 0.85; transition: opacity 0.2s; }
+        .dev-footer a:hover img { opacity: 1; }
+        .dev-footer-text { text-align: left; border-left: 0.5px solid #f4c0d1; padding-left: 12px; }
+        .dev-footer p.dev-name { font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; color: #993556; margin: 0; line-height: 1.3; }
+        .dev-footer p.dev-tag { font-size: 9px; color: #a3a29b; letter-spacing: 0.2em; margin: 0; }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- NAVEGAÇÃO -->
     <a href="index.html" class="back-link">← Voltar para o Menu</a>
-    <div id="loading"><div class="spinner"></div>Carregando itens de beleza…</div>
 
+    <!-- LOADING -->
+    <div id="loading">
+        <div class="spinner"></div>
+        Carregando lista de Beleza e Autocuidado…
+        <p style="font-size: 11px; color: #b8b6ae; margin-top: 8px;">Isso pode levar alguns segundos</p>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
     <div id="app">
         <div class="header">
             <h1>Beleza & <span>Autocuidado</span></h1>
@@ -74,11 +131,15 @@
             <p>Clique aqui para ver a lista de fragrâncias, combos e skincare do Boticário!</p>
         </a>
 
-        <div class="section-title">💄 Outras Sugestões (Com Link Direto)</div>
-        <div class="gift-list" id="list-beleza"></div>
+        <div class="section-title">💄 Maquiagens e Cabelo (Com Link)</div>
+        <div class="gift-list" id="list-beleza-links"></div>
+
+        <div class="section-title">✨ Skincare & Cuidados</div>
+        <div class="cards-grid" id="mural-beleza-fotos"></div>
     </div>
 </div>
 
+<!-- MODAL DE CONFIRMAÇÃO -->
 <div class="modal-bg" id="modal">
     <div class="modal">
         <h2>Apoiar sugestão 🎁</h2>
@@ -91,7 +152,27 @@
     </div>
 </div>
 
+<!-- TOAST DE SUCESSO -->
+<div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">Presente reservado com sucesso!</span>
+</div>
+
+<!-- ASSINATURA -->
+<div class="dev-footer">
+    <a href="https://mateusrad.github.io/portfolio/" target="_blank">
+        <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" />
+        <div class="dev-footer-text">
+            <p class="dev-name">Mateus Simões</p>
+            <p class="dev-tag">DEVELOPER</p>
+        </div>
+    </a>
+</div>
+
 <script type="module">
+    // =========================================
+    // 1. IMPORTAÇÕES E CONFIGURAÇÃO FIREBASE
+    // =========================================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -108,11 +189,21 @@
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
+    // =========================================
+    // 2. DADOS DOS PRODUTOS
+    // =========================================
     const items = {
         beleza: [
+            // ITENS DE LISTA
             { id: "m1", name: "Gloss Lipchilli Franboesa (Franciny Ehlke) 💄", desc: "Hidratação com muito brilho e o famoso efeito de volume nos lábios.", link: "https://franbyfr.com.br/products/gloss-fran-by-franciny-ehlke-franboesa" },
             { id: "m2", name: "Bride Kit Edição Limitada (Franciny Ehlke) 💍✨", desc: "Kit exclusivo sofisticado para looks incríveis em fotos.", link: "https://empreendermake.com.br/produtos/bride-kit-fran-by-franciny-ehlke-edicao-limitada-c-01-fran-12108-z5epd" },
-            { id: "m15", name: "Kit Onduladas Nutri Waves (4 ITENS) 🌊✨", desc: "Shampoo, Condicionador, Máscara e Creme de Pentear. Perfeito para manter as ondas da Bárbara hidratadas!", link: "https://www.apicecosmeticos.com.br/products/kit-linha-nutri-waves-01" }
+            { id: "m3", name: "Óleo Onduladas Nutri Waves 60ml 💧", desc: "Óleo antiporosidade para proteger e tratar.", link: "https://www.apicecosmeticos.com.br/collections/oleo-antiporosidade-ph-control-60ml/products/oleo-onduladas-nutri-waves-60ml" },
+            { id: "m4", name: "Kitão Onduladas Nutri Waves Higienização 🚿", desc: "Shampoo e Condicionador para uso diário.", link: "https://www.apicecosmeticos.com.br/products/kit-linha-nutri-waves-04?_pos=7&_psq=Shampoo%2C+Condicionador&_ss=e&_v=1.0" },
+            { id: "m15", name: "Kit Onduladas Nutri Waves Completo (4 ITENS) 🌊", desc: "Shampoo, Condicionador, Máscara e Creme de Pentear.", link: "https://www.apicecosmeticos.com.br/products/kit-linha-nutri-waves-01" },
+            { id: "m18", name: "Loção Hidratante Bepantol Derma 400ml 🧴", desc: "Restaurador corporal super hidratante de uso diário (Pode ser encontrado em qualquer farmácia).", link: "" },
+
+            // ITENS DE MURAL
+            { id: "m19", name: "Kit Eucerin Sun Oil Control + Gel Dermopure", desc: "Protetor solar facial FPS60 e gel de limpeza concentrado. Combinação essencial para cuidar da pele no dia a dia!", images: ["img/protetor01.png", "img/protetor02.png"], currentImage: 0 }
         ]
     };
 
@@ -124,41 +215,125 @@
     const btnConfirm = document.getElementById("btn-confirm");
     const btnCancel = document.getElementById("btn-cancel");
 
+    // =========================================
+    // 3. FUNÇÕES GERAIS (TOAST E GALERIA)
+    // =========================================
+    window.showToast = function(mensagem) {
+        const toast = document.getElementById("toast");
+        const toastMsg = document.getElementById("toast-msg");
+        if (toast && toastMsg) {
+            toastMsg.innerText = mensagem;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+    };
+
+    window.updateGalleryIndex = function(itemId, index) {
+        const item = items.beleza.find(i => i.id === itemId);
+        if (!item || !item.images) return;
+        if (index >= item.images.length) index = 0;
+        if (index < 0) index = item.images.length - 1;
+        item.currentImage = index;
+
+        const galleryEl = document.getElementById(`gallery-${itemId}`);
+        if(galleryEl) {
+            const imgEl = galleryEl.querySelector('.card-img');
+            const dotEls = galleryEl.querySelectorAll('.nav-dot');
+            const btnPrev = galleryEl.querySelector('.nav-arrow.prev');
+            const btnNext = galleryEl.querySelector('.nav-arrow.next');
+            imgEl.src = item.images[index];
+            if(btnPrev) btnPrev.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index - 1})`);
+            if(btnNext) btnNext.setAttribute('onclick', `updateGalleryIndex('${itemId}', ${index + 1})`);
+            dotEls.forEach((dot, idx) => idx === index ? dot.classList.add('active') : dot.classList.remove('active'));
+        }
+    };
+
+    // =========================================
+    // 4. RENDERIZAÇÃO DA PÁGINA
+    // =========================================
     function renderBeleza() {
-        const targetEl = document.getElementById("list-beleza");
-        targetEl.innerHTML = "";
-        items.beleza.forEach((item, index) => {
+        const targetList = document.getElementById("list-beleza-links");
+        const targetFotos = document.getElementById("mural-beleza-fotos");
+        targetList.innerHTML = "";
+        targetFotos.innerHTML = "";
+
+        let listCount = 0;
+
+        items.beleza.forEach((item) => {
             const itemData = dbState[item.id] || {};
             const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
             const claimed = count > 0;
-            targetEl.innerHTML += `
-                <div class="gift-item">
-                  <div class="item-number ${claimed ? "multi-ok" : ""}">${claimed ? "✓" : (index + 1)}</div>
-                  <div>
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-meta">
-                      ${item.desc} <span class="dot"></span> <a href="${item.link}" target="_blank">Ver na Loja</a>
-                      ${claimed ? `<br><span style="color:#1D70B8;font-weight:600; width: 100%;">· Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
-                    </div>
-                  </div>
-                  <div><button class="claim-btn ${claimed ? "multi-ok" : ""}" onclick="openModal('${item.id}')">Escolher</button></div>
-                </div>`;
+            const hasImages = item.images && item.images.length > 0;
+
+            if (hasImages) {
+                const multImg = item.images.length > 1;
+                let dotsHtml = "";
+                item.images.forEach((img, idx) => { dotsHtml += `<button class="nav-dot ${idx === item.currentImage ? 'active' : ''}" onclick="updateGalleryIndex('${item.id}', ${idx})"></button>`; });
+
+                targetFotos.innerHTML += `
+                    <div class="gift-card">
+                        <div class="card-gallery" id="gallery-${item.id}">
+                            <img src="${item.images[item.currentImage]}" class="card-img" alt="${item.name}">
+                            ${multImg ? `<button class="nav-arrow prev" onclick="updateGalleryIndex('${item.id}', ${item.currentImage - 1})">‹</button><button class="nav-arrow next" onclick="updateGalleryIndex('${item.id}', ${item.currentImage + 1})">›</button><div class="gallery-nav">${dotsHtml}</div>` : ''}
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">${item.name}</div>
+                            <div class="card-desc">${item.desc}</div>
+                            ${claimed ? `<div class="card-status">👥 Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</div>` : ''}
+                            <button class="btn-acao-card ${claimed ? 'multi-ok' : ''}" onclick="openModal('${item.id}')">${claimed ? 'Apoiar também' : 'Escolher este item'}</button>
+                        </div>
+                    </div>`;
+            } else {
+                listCount++;
+                targetList.innerHTML += `
+                    <div class="gift-item">
+                      <div class="item-number ${claimed ? "multi-ok" : ""}">${claimed ? "✓" : listCount}</div>
+                      <div>
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-meta">
+                          ${item.desc} ${item.link ? `<span class="dot"></span> <a href="${item.link}" target="_blank">Ver Produto</a>` : ''}
+                          ${claimed ? `<br><span style="color:#1D70B8;font-weight:600; width: 100%;">· Escolhido por ${count} ${count === 1 ? 'pessoa' : 'pessoas'} ✓</span>` : ""}
+                        </div>
+                      </div>
+                      <div><button class="claim-btn ${claimed ? "multi-ok" : ""}" onclick="openModal('${item.id}')">Escolher</button></div>
+                    </div>`;
+            }
         });
     }
 
-    window.openModal = function(id) { pendingId = id; nameInput.value = ""; modal.classList.add("open"); setTimeout(() => nameInput.focus(), 100); };
-    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
+    // =========================================
+    // 5. CONTROLES DO MODAL E FIREBASE
+    // =========================================
+    window.openModal = function(id) {
+        pendingId = id;
+        nameInput.value = "";
+        modal.classList.add("open");
+        setTimeout(() => nameInput.focus(), 100);
+    };
+
+    btnCancel.addEventListener("click", () => {
+        modal.classList.remove("open");
+        pendingId = null;
+    });
+
     btnConfirm.addEventListener("click", async () => {
         const nome = nameInput.value.trim();
         if (!nome) { nameInput.focus(); return; }
         if (!pendingId) return;
+
         const itemRef = ref(db, "/presentes/" + pendingId);
-        await push(itemRef, nome);
+        await push(itemRef, nome); // Registra no banco
+
         modal.classList.remove("open");
         pendingId = null;
+        showToast("Presente reservado com sucesso! 🎁"); // Aciona o Toast
     });
+
     nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
 
+    // =========================================
+    // 6. INICIALIZAÇÃO DE DADOS
+    // =========================================
     onValue(ref(db, "presentes"), snapshot => {
         document.getElementById("loading").style.display = "none";
         document.getElementById("app").style.display = "block";

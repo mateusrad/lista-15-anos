@@ -110,10 +110,10 @@
         }
 
         /* Diferenciando fundos conceituais (opcional: você pode trocar por imagens reais da pasta img/) */
-        .cat-calcados::before { background-image: url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500'); }
-        .cat-roupas::before { background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500'); }
-        .cat-bolsas::before { background-image: url('https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500'); }
-        .cat-beleza::before { background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500'); }
+        .cat-calcados::before { background-image: url('img/1543163521-1.jpg'); }
+        .cat-roupas::before { background-image: url('img/1483985988355.jpg'); }
+        .cat-bolsas::before { background-image: url('img/1584917865442.jpg'); }
+        .cat-beleza::before { background-image: url('img/1522335789203.jpg'); }
 
         .card-body-content {
             text-align: center;
@@ -153,43 +153,42 @@
         }
 
         /* ESTILO DA ASSINATURA NO RODAPÉ */
-        .developer-signature {
-            display: flex;
+        .dev-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+        }
+        .dev-footer a {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
-            color: #a3a29b; /* Cor suave padrão */
-            font-size: 11px;
-            margin-top: 1rem;
-            opacity: 0.8;
-            transition: opacity 0.2s, color 0.2s;
-            font-family: 'Lato', sans-serif;
         }
-
-        .developer-signature:hover {
-            opacity: 1;
-            color: #D4537E; /* Muda para a cor de destaque ao passar o mouse */
-        }
-
-        .dev-logo {
-            height: 20px; /* Tamanho discreto do logo */
+        .dev-footer img {
+            height: 38px;
             width: auto;
-            display: block;
+            opacity: 0.85;
+            transition: opacity 0.2s;
         }
-
-        .dev-name {
-            font-weight: 700;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
+        .dev-footer a:hover img { opacity: 1; }
+        .dev-footer-text {
+            text-align: left;
+            border-left: 0.5px solid #f4c0d1;
+            padding-left: 12px;
         }
-
-        .developer-signature:hover .dev-name {
-            border-color: #D4537E; /* Cria um sublinhado elegante no hover */
+        .dev-footer p.dev-name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: #993556;
+            margin: 0;
+            line-height: 1.3;
         }
-
-        @media (max-width: 500px) {
-            .developer-signature { flex-direction: column; gap: 6px; }
+        .dev-footer p.dev-tag {
+            font-size: 9px;
+            color: #a3a29b;
+            letter-spacing: 0.2em;
+            margin: 0;
         }
     </style>
 </head>
@@ -243,10 +242,15 @@
         ✦ Muito obrigado por fazer parte deste momento com a nossa família! ✦
     </div>
 
-    <a href="LINK_DO_SEU_PORTIFOLIO_AQUI" target="_blank" class="developer-signature">
-        <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" class="dev-logo" />
-        <span>Code & Design por <span class="dev-name">Mateus Rosa</span></span>
-    </a>
+    <div class="dev-footer">
+        <a href="https://mateusrad.github.io/portfolio/" target="_blank">
+            <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" />
+            <div class="dev-footer-text">
+                <p class="dev-name">Mateus Simões</p>
+                <p class="dev-tag">DEVELOPER</p>
+            </div>
+        </a>
+    </div>
 
 </div>
 

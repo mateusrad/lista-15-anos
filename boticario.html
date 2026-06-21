@@ -4,23 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Especial O Boticário — 15 Anos</title>
+    <!-- IMPORTAÇÃO DE FONTES -->
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
     <style>
+        /* =========================================
+           1. RESET & BASE
+        ========================================= */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background: #fdf6f9; color: #2c2c2a; min-height: 100vh; padding: 2rem 1rem 4rem; }
-        .container { max-width: 720px; margin: 0 auto; }
+        body { font-family: 'Lato', sans-serif; background: #fdf6f9; color: #2c2c2a; min-height: 100vh; padding: 2rem 1rem 4rem; display: flex; flex-direction: column; align-items: center;}
+        .container { width: 100%; max-width: 720px; flex-grow: 1;}
 
+        /* =========================================
+           2. NAVEGAÇÃO & CABEÇALHO
+        ========================================= */
         .back-link { display: inline-flex; align-items: center; gap: 6px; color: #D4537E; text-decoration: none; font-weight: 700; font-size: 14px; font-family: 'Urbanist', sans-serif; margin-bottom: 1.5rem; transition: color 0.2s, transform 0.2s; }
         .back-link:hover { color: #993556; transform: translateX(-4px); }
-
         .header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f4c0d1; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; font-style: italic; color: #2c2c2a; line-height: 1.2; margin-bottom: 8px; }
         .header h1 span { color: #D4537E; font-weight: 600; }
         .header-sub { font-size: 13px; color: #888780; font-weight: 300; line-height: 1.4; background: #FBEAF0; padding: 12px; border-radius: 8px; margin-top: 10px; display: inline-block;}
-
         .section-title { font-family: 'Urbanist', sans-serif; font-size: 14px; font-weight: 700; color: #993556; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
         .section-title::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(to right, #f4c0d1, transparent); }
 
+        /* =========================================
+           3. LISTA SIMPLES
+        ========================================= */
         .gift-list { display: flex; flex-direction: column; gap: 10px; }
         .gift-item { background: #fff; border: 1px solid #f4c0d1; border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(153, 53, 86, 0.02); transition: transform 0.2s; }
         .gift-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(153, 53, 86, 0.06); }
@@ -28,33 +36,61 @@
         .item-number.multi-ok { background: #E8F4F8; color: #1D70B8; font-size: 16px; }
         .item-name { font-family: 'Urbanist', sans-serif; font-size: 15px; font-weight: 700; color: #2c2c2a; margin-bottom: 4px; }
         .item-meta { font-size: 13px; color: #888780; line-height: 1.4; }
-
         .claim-btn { font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 20px; border: 1px solid #D4537E; color: #993556; background: transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
         .claim-btn:hover { background: #D4537E; color: #fff; }
         .claim-btn.multi-ok { border-color: #1D70B8; color: #1D70B8; background: #E8F4F8; }
 
+        /* =========================================
+           4. MODAL & LOADING
+        ========================================= */
         #loading { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
         .spinner { width: 28px; height: 28px; border: 3px solid #f4c0d1; border-top-color: #D4537E; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         #app { display: none; }
-
         .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-bg.open { display: flex; }
         .modal { background: #fff; border-radius: 16px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
         .modal h2 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; color: #2c2c2a; }
         .modal p { font-size: 13px; color: #888780; margin-bottom: 1.5rem; line-height: 1.5; }
         .modal input { width: 100%; padding: 10px 14px; border: 1px solid #f4c0d1; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .modal input:focus { border-color: #D4537E; }
         .modal-actions { display: flex; gap: 8px; justify-content: center; }
         .btn-confirm { padding: 9px 20px; border-radius: 20px; border: none; background: #D4537E; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
         .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
         @media (max-width: 500px) { .gift-item { grid-template-columns: 1fr; text-align: center; justify-items: center; gap: 10px;} }
+
+        /* =========================================
+           5. TOAST NOTIFICATION
+        ========================================= */
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #2c2c2a; color: #fff; font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 200; white-space: nowrap; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast-icon { color: #97C459; font-size: 16px; }
+
+        /* =========================================
+           6. ASSINATURA RODAPÉ
+        ========================================= */
+        .dev-footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; }
+        .dev-footer a { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+        .dev-footer img { height: 38px; width: auto; opacity: 0.85; transition: opacity 0.2s; }
+        .dev-footer a:hover img { opacity: 1; }
+        .dev-footer-text { text-align: left; border-left: 0.5px solid #f4c0d1; padding-left: 12px; }
+        .dev-footer p.dev-name { font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; color: #993556; margin: 0; line-height: 1.3; }
+        .dev-footer p.dev-tag { font-size: 9px; color: #a3a29b; letter-spacing: 0.2em; margin: 0; }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- NAVEGAÇÃO -->
     <a href="beleza.html" class="back-link">← Voltar para Beleza</a>
-    <div id="loading"><div class="spinner"></div>Carregando produtos…</div>
 
+    <!-- LOADING -->
+    <div id="loading">
+        <div class="spinner"></div>
+        Carregando lista de produtos…
+        <p style="font-size: 11px; color: #b8b6ae; margin-top: 8px;">Isso pode levar alguns segundos</p>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
     <div id="app">
         <div class="header">
             <h1>Lista Especial <span>O Boticário</span></h1>
@@ -69,6 +105,7 @@
     </div>
 </div>
 
+<!-- MODAL DE CONFIRMAÇÃO -->
 <div class="modal-bg" id="modal">
     <div class="modal">
         <h2>Apoiar sugestão 🎁</h2>
@@ -81,7 +118,27 @@
     </div>
 </div>
 
+<!-- TOAST DE SUCESSO -->
+<div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">Presente reservado com sucesso!</span>
+</div>
+
+<!-- ASSINATURA -->
+<div class="dev-footer">
+    <a href="https://mateusrad.github.io/portfolio/" target="_blank">
+        <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" />
+        <div class="dev-footer-text">
+            <p class="dev-name">Mateus Simões</p>
+            <p class="dev-tag">DEVELOPER</p>
+        </div>
+    </a>
+</div>
+
 <script type="module">
+    // =========================================
+    // 1. IMPORTAÇÕES E CONFIGURAÇÃO FIREBASE
+    // =========================================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -98,6 +155,9 @@
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
+    // =========================================
+    // 2. DADOS DOS PRODUTOS
+    // =========================================
     const items = {
         boti: [
             { id: "m3", name: "Combo Deleite Caramelizado (Body Splash + Loção) 🍮💛", desc: "Fragrância doce e confortável para pós-banho." },
@@ -125,10 +185,26 @@
     const btnConfirm = document.getElementById("btn-confirm");
     const btnCancel = document.getElementById("btn-cancel");
 
+    // =========================================
+    // 3. FUNÇÕES GERAIS (TOAST)
+    // =========================================
+    window.showToast = function(mensagem) {
+        const toast = document.getElementById("toast");
+        const toastMsg = document.getElementById("toast-msg");
+        if (toast && toastMsg) {
+            toastMsg.innerText = mensagem;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+    };
+
+    // =========================================
+    // 4. RENDERIZAÇÃO DA PÁGINA
+    // =========================================
     function renderGroup(groupKey, targetId) {
         const targetEl = document.getElementById(targetId);
         targetEl.innerHTML = "";
-        items[groupKey].forEach((item, index) => {
+        items[groupKey].forEach((item) => {
             const itemData = dbState[item.id] || {};
             const count = typeof itemData === 'object' ? Object.keys(itemData).length : (itemData ? 1 : 0);
             const claimed = count > 0;
@@ -147,19 +223,39 @@
         });
     }
 
-    window.openModal = function(id) { pendingId = id; nameInput.value = ""; modal.classList.add("open"); setTimeout(() => nameInput.focus(), 100); };
-    btnCancel.addEventListener("click", () => { modal.classList.remove("open"); pendingId = null; });
+    // =========================================
+    // 5. CONTROLES DO MODAL E FIREBASE
+    // =========================================
+    window.openModal = function(id) {
+        pendingId = id;
+        nameInput.value = "";
+        modal.classList.add("open");
+        setTimeout(() => nameInput.focus(), 100);
+    };
+
+    btnCancel.addEventListener("click", () => {
+        modal.classList.remove("open");
+        pendingId = null;
+    });
+
     btnConfirm.addEventListener("click", async () => {
         const nome = nameInput.value.trim();
         if (!nome) { nameInput.focus(); return; }
         if (!pendingId) return;
+
         const itemRef = ref(db, "/presentes/" + pendingId);
-        await push(itemRef, nome);
+        await push(itemRef, nome); // Registra no banco
+
         modal.classList.remove("open");
         pendingId = null;
+        showToast("Presente reservado com sucesso! 🎁"); // Aciona o Toast
     });
+
     nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
 
+    // =========================================
+    // 6. INICIALIZAÇÃO DE DADOS
+    // =========================================
     onValue(ref(db, "presentes"), snapshot => {
         document.getElementById("loading").style.display = "none";
         document.getElementById("app").style.display = "block";
