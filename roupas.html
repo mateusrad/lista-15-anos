@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Roupas — 15 Anos da Bárbara</title>
-    <!-- IMPORTAÇÃO DE FONTES -->
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
     <style>
         /* =========================================
@@ -74,7 +73,7 @@
         .btn-cancel { padding: 9px 20px; border-radius: 20px; border: 1px solid #e0e0e0; background: transparent; color: #888780; font-size: 13px; cursor: pointer; }
 
         /* =========================================
-           5. TOAST NOTIFICATION
+           5. TOAST NOTIFICATION (NOVO)
         ========================================= */
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #2c2c2a; color: #fff; font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 200; white-space: nowrap; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -95,17 +94,14 @@
 <body>
 
 <div class="container">
-    <!-- NAVEGAÇÃO -->
     <a href="index.html" class="back-link">← Voltar para o Menu</a>
 
-    <!-- LOADING -->
     <div id="loading">
         <div class="spinner"></div>
         Carregando opções de roupas…
         <p style="font-size: 11px; color: #b8b6ae; margin-top: 8px;">Isso pode levar alguns segundos</p>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <div id="app">
         <div class="header">
             <h1>Roupas & <span>Estilos</span></h1>
@@ -116,7 +112,6 @@
     </div>
 </div>
 
-<!-- MODAL DE CONFIRMAÇÃO -->
 <div class="modal-bg" id="modal">
     <div class="modal">
         <h2>Apoiar sugestão 🎁</h2>
@@ -129,13 +124,11 @@
     </div>
 </div>
 
-<!-- TOAST DE SUCESSO -->
 <div class="toast" id="toast">
     <span class="toast-icon">✓</span>
     <span id="toast-msg">Presente reservado com sucesso!</span>
 </div>
 
-<!-- ASSINATURA -->
 <div class="dev-footer">
     <a href="https://mateusrad.github.io/portfolio/" target="_blank">
         <img src="img/logo_mateus.png" alt="Logo Mateus Rosa Developer" />
@@ -171,10 +164,13 @@
     // =========================================
     const items = {
         roupas: [
+            // ITENS COM LINK PRIMEIRO
             { id: "r7", name: "Legging Preta c/ Viés Branco", desc: "Tamanho P. Legging esportiva e muito confortável para usar na viagem.", images: [], link: "https://www.pwrdbycoffee.com.br/produtos/legging-preta-c-vies-branco/", currentImage: 0 },
             { id: "r8", name: "Legging Branca c/ Viés Preto", desc: "Tamanho P. Variante na cor branca.", images: [], link: "https://www.pwrdbycoffee.com.br/produtos/legging-branca-c-vies-preto-uq2b2/", currentImage: 0 },
             { id: "r9", name: "Cropped Manga Longa Rouge", desc: "Tamanho P. Perfeito para compor o look esportivo.", images: [], link: "https://www.pwrdbycoffee.com.br/produtos/cropped-manga-longa-rouge/", currentImage: 0 },
             { id: "r10", name: "Cropped Manga Longa Preto", desc: "Tamanho P. Variante clássica na cor preta.", images: [], link: "https://www.pwrdbycoffee.com.br/produtos/cropped-manga-longa-preto/", currentImage: 0 },
+
+            // ITENS COM IMAGEM DEPOIS
             { id: "r1", name: "Calça Black Jeans Wide Slim Estonada", desc: "Tamanho 36 (PP/P). Estilo wide leg estonada, super curinga.", images: ["img/roupas/calca01.png", "img/roupas/calca02.png", "img/roupas/calca03.png", "img/roupas/calca04.png"], currentImage: 0 },
             { id: "r2", name: "Calça Super Wide Jeans Média Azul Escuro", desc: "Tamanho 36 (PP/P). Modelagem soltinha.", images: ["img/roupas/calca05.png", "img/roupas/calca06.png", "img/roupas/calca07.png", "img/roupas/calca08.png", "img/roupas/calca09.png", "img/roupas/calca10.png"], currentImage: 0 },
             { id: "r3", name: "Calça Super Wide em Jeans Azul", desc: "Tamanho 36 (PP/P).", images: ["img/roupas/calca11.png", "img/roupas/calca12.png"], currentImage: 0 },
@@ -291,11 +287,11 @@
         if (!pendingId) return;
 
         const itemRef = ref(db, "/presentes/" + pendingId);
-        await push(itemRef, nome);
+        await push(itemRef, nome); // Registra no banco usando push() para múltiplos convidados
 
         modal.classList.remove("open");
         pendingId = null;
-        showToast("Presente reservado com sucesso! 🎁");
+        showToast("Presente reservado com sucesso! 🎁"); // Notificação visual
     });
 
     nameInput.addEventListener("keydown", e => { if (e.key === "Enter") btnConfirm.click(); });
